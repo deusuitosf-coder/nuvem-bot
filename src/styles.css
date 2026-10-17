@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #f3f6fb;
+  --color-surface: #ffffff;
+  --color-ink: #142033;
+  --color-muted: #5c6b80;
+  --color-line: #d7e2ee;
+  --color-navy: #0b3a66;
+  --color-sky: #1d6fb8;
+  --color-mist: #e8f2fb;
+  --color-ok: #0f6b4c;
+  --color-warn: #9b2c2c;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --radius-card: 1rem;
+}
+
+@layer base {
+  html, body { background: var(--color-bg); color: var(--color-ink); }
+  button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.rise { animation: rise 280ms ease; }
+
+@keyframes line-in {
+  from { opacity: 0; transform: translateY(0.4em); }
+  to { opacity: 1; transform: none; }
+}
+
+.line-in { animation: line-in 520ms ease both; }
+.line-in-late { animation: line-in 520ms ease 140ms both; }
+.word-in { display: inline-block; animation: line-in 420ms ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .line-in, .line-in-late, .word-in { animation: none; }
+}
