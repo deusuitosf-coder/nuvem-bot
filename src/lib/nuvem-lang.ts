@@ -60,7 +60,7 @@ export const copy = {
     d5b: "Desça até Mudança e leve o controle a 40%. A palavra muda. Volte a 15%. A palavra volta. A mesma frase dá o mesmo resultado.",
     more: "O resto da conta",
     payTitle: "Pagamento",
-    payBody: "A conta da frase pode ser vista duas vezes sem pagar. A terceira vez, e a leitura de um documento, são outro trabalho. O preço é combinado antes. Esta página não lê PDF.",
+    payBody: "O exemplo da página é grátis. A frase da empresa tem dois preços, escolhidos antes: R$ 800, a palavra na hora; R$ 100, a palavra em sete dias. Achar caro no meio não muda o preço.",
     payHow: "O pagamento profissional é um Pix com QR, confirmado na hora. Cartão não se digita aqui. Enquanto a cobrança automática não está ligada, o Pix é combinado na conversa.",
   },
   en: {
@@ -101,7 +101,7 @@ export const copy = {
     d5b: "Go to Change and move it to 40%. The word changes. Move it back to 15%. The word returns. The same sentence gives the same result.",
     more: "The rest of the calculation",
     payTitle: "Payment",
-    payBody: "The sentence calculation can be seen twice without paying. The third time, and reading a document, are a separate job. The price is agreed first. This page does not read a PDF.",
+    payBody: "The example on the page is free. A company's own sentence has two prices, chosen first: R$ 800, the word at once; R$ 100, the word in seven days. Finding it expensive halfway does not change the price.",
     payHow: "The professional payment is a Pix QR code, confirmed at once. Do not type a card here. Until automatic charging is connected, Pix is agreed in the conversation.",
   },
   es: {
@@ -142,7 +142,7 @@ export const copy = {
     d5b: "Baje a Cambio y llévelo a 40%. La palabra cambia. Vuelva a 15%. La palabra regresa. La misma frase da el mismo resultado.",
     more: "El resto de la cuenta",
     payTitle: "Pago",
-    payBody: "La cuenta de la frase se puede ver dos veces sin pagar. La tercera, y la lectura de un documento, son otro trabajo. El precio se acuerda antes. Esta página no lee un PDF.",
+    payBody: "El ejemplo de la página es gratis. La frase de la empresa tiene dos precios, elegidos antes: R$ 800, la palabra al momento; R$ 100, la palabra en siete días. Parecer caro a mitad no cambia el precio.",
     payHow: "El pago profesional es un Pix con QR, confirmado al momento. No escriba una tarjeta aquí. Hasta que el cobro automático esté conectado, el Pix se acuerda en la conversación.",
   },
 } as const;
