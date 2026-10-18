@@ -165,7 +165,7 @@ function NuvemPage() {
 
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-4 py-6 font-sans sm:px-8 sm:py-10">
-      <header className="border-b border-line pb-5">
+      <header className="pb-2">
         <div className="flex items-center justify-between gap-3">
           <p className="text-xs font-medium tracking-[0.18em] text-sky">NUVEM.BOT</p>
           <div className="flex gap-1">
@@ -184,8 +184,10 @@ function NuvemPage() {
             ))}
           </div>
         </div>
-        <h1 className="line-in mt-3 font-display text-4xl leading-tight text-navy sm:text-5xl">{text.title}</h1>
-        <p className="line-in-late mt-2 max-w-xl text-lg leading-snug text-ink">{text.sub}</p>
+        <div key={lang} className="rise mt-8 max-w-xl">
+          <h1 className="font-display text-3xl leading-snug text-navy sm:text-4xl">{text.title}</h1>
+          <p className="mt-4 text-base leading-relaxed text-muted">{text.sub}</p>
+        </div>
       </header>
       <section key={`${sector}-${lang}`} className="rise mt-6 rounded-[var(--radius-card)] bg-navy p-5 text-surface sm:p-6">
         <p className="text-xs tracking-[0.14em] text-mist">{text.voice}</p>
@@ -285,6 +287,11 @@ function NuvemPage() {
           {text.calcSensitive}: {sensitive}%
           <input type="range" min={0} max={100} value={sensitive} onChange={(event) => setSensitive(Number(event.target.value))} className="mt-2 w-full" />
         </label>
+      </section>
+      <section className="mt-4 rounded-[var(--radius-card)] border border-line bg-surface p-4">
+        <h2 className="font-display text-xl text-navy">{text.payTitle}</h2>
+        <p className="mt-2 text-sm leading-relaxed text-ink">{text.payBody}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{text.payHow}</p>
       </section>
       <details className="mt-6">
         <summary className="min-h-11 cursor-pointer text-sm text-navy">{text.more}</summary>

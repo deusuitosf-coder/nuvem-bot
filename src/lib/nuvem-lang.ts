@@ -59,6 +59,9 @@ export const copy = {
     d5: "5. A prova",
     d5b: "Desça até Mudança e leve o controle a 40%. A palavra muda. Volte a 15%. A palavra volta. A mesma frase dá o mesmo resultado.",
     more: "O resto da conta",
+    payTitle: "Leitura de documento",
+    payBody: "Esta página não lê PDF nem planilha. A conta da frase continua grátis. Ler um documento é outro trabalho, com outro preço, combinado antes.",
+    payHow: "O pagamento é por Pix, na conversa. Não digite cartão aqui.",
   },
   en: {
     title: "Write the decision in one sentence.",
@@ -97,6 +100,9 @@ export const copy = {
     d5: "5. The proof",
     d5b: "Go to Change and move it to 40%. The word changes. Move it back to 15%. The word returns. The same sentence gives the same result.",
     more: "The rest of the calculation",
+    payTitle: "Document reading",
+    payBody: "This page does not read a PDF or a spreadsheet. The sentence calculation stays free. Reading a document is a separate job, with a separate price, agreed first.",
+    payHow: "Payment is by Pix, in the conversation. Do not type a card here.",
   },
   es: {
     title: "Escriba la decisión en una frase.",
@@ -135,5 +141,8 @@ export const copy = {
     d5: "5. La prueba",
     d5b: "Baje a Cambio y llévelo a 40%. La palabra cambia. Vuelva a 15%. La palabra regresa. La misma frase da el mismo resultado.",
     more: "El resto de la cuenta",
+    payTitle: "Lectura de documento",
+    payBody: "Esta página no lee un PDF ni una hoja de cálculo. La cuenta de la frase sigue gratis. Leer un documento es otro trabajo, con otro precio, acordado antes.",
+    payHow: "El pago es por Pix, en la conversación. No escriba una tarjeta aquí.",
   },
 } as const;
