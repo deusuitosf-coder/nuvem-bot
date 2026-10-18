@@ -9,7 +9,7 @@ export type GroupId =
   | "compara"
   | "humano";
 
-export type SectorId = "mercado" | "comunicacao" | "politica" | "lancamento" | "saude";
+export type SectorId = "mercado" | "comunicacao" | "atendimento" | "lancamento" | "saude";
 
 export type SimInput = {
   decision: string;
@@ -159,7 +159,7 @@ function spoken(id: GroupId, stance: Stance, complaint: string, rival: string, s
   const speech: Record<SectorId, Record<Stance, string>> = {
     mercado: { adere: "Mantenho a posição.", resiste: "Reduzo a posição.", rejeita: "Saio do ativo." },
     comunicacao: { adere: "A mensagem passa.", resiste: "A mensagem gera dúvida.", rejeita: "A mensagem gera rejeição." },
-    politica: { adere: "Eu apoio a mudança.", resiste: "Eu resisto à mudança.", rejeita: "Eu rejeito a mudança." },
+    atendimento: { adere: "Eu aceito o novo atendimento.", resiste: "Eu quero o atendimento de antes.", rejeita: "Eu saio se mudar o atendimento." },
     lancamento: { adere: "Eu experimento.", resiste: "Eu espero para ver.", rejeita: "Eu não compro." },
     saude: { adere: "Eu sigo a orientação.", resiste: "Eu adio.", rejeita: "Eu não sigo." },
   };
@@ -173,7 +173,7 @@ function spoken(id: GroupId, stance: Stance, complaint: string, rival: string, s
 function namesFor(sector?: SectorId): Record<GroupId, string> {
   if (sector === "mercado") return { fiel: "Conservador", sensivel: "Sensível", ocasional: "Ocasional", insatisfeito: "Insatisfeito", influenciador: "Formador", compara: "Compara", humano: "Mesa" };
   if (sector === "comunicacao") return { fiel: "Fiel", sensivel: "Consumidor", ocasional: "Ocasional", insatisfeito: "Irritado", influenciador: "Formador", compara: "Mídia", humano: "Pessoa" };
-  if (sector === "politica") return { fiel: "Base", sensivel: "Sensível", ocasional: "Ocasional", insatisfeito: "Contrário", influenciador: "Formador", compara: "Compara", humano: "Atendimento" };
+  if (sector === "atendimento") return { fiel: "Fiel", sensivel: "Apressado", ocasional: "Ocasional", insatisfeito: "Irritado", influenciador: "Espalha", compara: "Compara", humano: "Pessoa" };
   if (sector === "lancamento") return { fiel: "Fiel", sensivel: "Sensível", ocasional: "Curioso", insatisfeito: "Frustrado", influenciador: "Espalha", compara: "Compara", humano: "Pessoa" };
   if (sector === "saude") return { fiel: "Segue", sensivel: "Sensível", ocasional: "Ocasional", insatisfeito: "Desconfia", influenciador: "Espalha", compara: "Compara", humano: "Clínico" };
   return NAMES;

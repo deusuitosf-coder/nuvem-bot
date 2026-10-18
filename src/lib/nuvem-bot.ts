@@ -66,7 +66,7 @@ export function swarmGrid(agents: Check[], sites: Check[]) {
 export const sectors = [
   { id: "mercado", name: "Mercado", seed: "O juro sobe 15%." },
   { id: "comunicacao", name: "Comunicação", seed: "A nota sai hoje, com tom duro." },
-  { id: "politica", name: "Política", seed: "A nova regra muda 15% do custo." },
+  { id: "atendimento", name: "Atendimento", seed: "O atendimento muda 15% da espera." },
   { id: "lancamento", name: "Lançamento", seed: "O produto chega 15% mais caro." },
   { id: "saude", name: "Saúde", seed: "A campanha pede uma mudança de 15%." },
 ] as const;
