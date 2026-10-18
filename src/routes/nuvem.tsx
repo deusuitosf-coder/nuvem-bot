@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { decimalText, plainText, savedReports } from "@/lib/guardrails";
 import { agentChecks, bends, boardFrom, chiefText, readSeed, runSir, sectors, seedGraph } from "@/lib/nuvem-bot";
 import { copy, sayRisk, sayVerdict, type Lang } from "@/lib/nuvem-lang";
-import { simulate, type SectorId, type SimResult } from "@/lib/sim-engine";
+import { QuadroBot } from "@/components/quadro-board";
 
 export const Route = createFileRoute("/nuvem")({
   head: () => ({ meta: [{ title: "nuvem.bot" }] }),
@@ -293,6 +293,7 @@ function NuvemPage() {
         <p className="mt-2 text-sm leading-relaxed text-ink">{text.payBody}</p>
         <p className="mt-2 text-sm leading-relaxed text-muted">{text.payHow}</p>
       </section>
+      <QuadroBot />
       <details className="mt-6">
         <summary className="min-h-11 cursor-pointer text-sm text-navy">{text.more}</summary>
       {sector === "lancamento" ? <CurvePanel title="A curva" note="Adesão em 4 rodadas. Não diz se o produto vira fenômeno." result={result} adopt="Eu experimento." stop={["Eu espero para ver.", "Eu não compro."]} /> : null}
