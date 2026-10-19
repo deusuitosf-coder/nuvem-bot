@@ -13,6 +13,8 @@ try {
     const brand = page.getByRole("link", { name: "Nuven Bot — início", exact: true });
     assert.ok(await brand.locator("img").evaluate((el) => el.getBoundingClientRect().width) >= 64);
     await page.screenshot({ path: `/workspace/screenshots/home-${width}.png`, caret: "initial" });
+    assert.doesNotMatch(await page.locator("body").innerText(), /R\$/);
+    await page.getByText("Fazer orçamento", { exact: true }).click();
     await page.getByLabel("Empresa ou projeto (opcional)", { exact: true }).fill("Exemplo de empresa");
     await page.getByLabel("Quantidade de serviços", { exact: true }).fill("3");
     await page.getByLabel("O que você precisa receber?", { exact: true }).fill("Organizar uma demanda simples");

@@ -13,7 +13,7 @@ export function QuoteBuilder() {
     const url = URL.createObjectURL(new Blob([quoteText(draft)], { type: "text/plain;charset=utf-8" }));
     const link = document.createElement("a"); link.href = url; link.download = "nuven-bot-orcamento.txt"; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  return <section id="orcamento" className="border-t border-line py-12">
+  return <section id="quote-builder" className="border-t border-line py-12">
     <p className="text-sm tracking-widest text-sky">SEU ESCOPO, ANTES DO PREÇO FINAL</p>
     <h2 className="mt-3 font-display text-3xl text-navy sm:text-4xl">Monte seu pedido de orçamento.</h2>
     <p className="mt-4 max-w-2xl leading-relaxed text-muted">Diga o que precisa, veja a base de preço e guarde um rascunho. Os dados ficam nesta página: nada é enviado nem cobrado.</p>

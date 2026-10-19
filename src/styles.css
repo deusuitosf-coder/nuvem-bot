@@ -48,9 +48,11 @@
 
 @media print {
   body:has(#quote-result) main > :not(#orcamento),
-  body:has(#quote-result) #orcamento > :not(#quote-result),
+  body:has(#quote-result) #orcamento > summary,
+  body:has(#quote-result) #quote-builder > :not(#quote-result),
   body:has(#quote-result) .quote-actions { display: none !important; }
   body:has(#quote-result) main,
-  body:has(#quote-result) #orcamento { margin: 0; padding: 0; max-width: none; border: 0; }
+  body:has(#quote-result) #orcamento,
+  body:has(#quote-result) #quote-builder { margin: 0; padding: 0; max-width: none; border: 0; }
   body:has(#quote-result) #quote-result { margin: 0; padding: 1rem; border: 0; background: white; color: #142033; }
 }

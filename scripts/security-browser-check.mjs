@@ -42,10 +42,10 @@ try {
 
   // Synthetic hostile parent is fulfilled locally; no external site is contacted.
   const framing = await browser.newContext();
-  await framing.route("http://untrusted.invalid/**", (route) => route.fulfill({ contentType: "text/html", body: '<iframe src="http://127.0.0.1:8081/nuvem"></iframe>' }));
+  await framing.route("http://localhost:8082/**", (route) => route.fulfill({ contentType: "text/html", body: '<iframe src="http://127.0.0.1:8081/nuvem"></iframe>' }));
   const parent = await framing.newPage();
   const denied = parent.waitForEvent("console", { predicate: (msg) => msg.text().includes("frame-ancestors"), timeout: 15000 });
-  await parent.goto("http://untrusted.invalid/", { waitUntil: "load" });
+  await parent.goto("http://localhost:8082/", { waitUntil: "load" });
   await denied;
   await framing.close();
   console.log("Security checks passed: real response headers, stored-XSS escaping, inline-handler blocking and hostile-frame blocking.");
