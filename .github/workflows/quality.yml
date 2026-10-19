@@ -37,6 +37,7 @@ jobs:
             sleep 1
           done
           node scripts/browser-smoke.mjs http://127.0.0.1:8081/ "/workspace/screenshots/built.png" --baseline "/workspace/screenshots/dev.json"
+          node scripts/quadro-browser-check.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
