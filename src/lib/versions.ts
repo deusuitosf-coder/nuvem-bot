@@ -21,13 +21,6 @@ export const demoVersions: DemoVersion[] = [
     place: "Pasta escrita, não é uma tela da demo",
     note: "R$ 1.900, no mesmo fluxo, fora do piloto.",
   },
-  {
-    id: "1",
-    title: "Camaleão",
-    state: "arquivada",
-    place: "Arquivo antigo",
-    note: "Não publique e não apresente. O nome já é de outra empresa.",
-  },
 ];
 
 export const currentVersion = demoVersions[0];
