@@ -1,14 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { decimalText, plainText, savedReports } from "@/lib/guardrails";
-import { agentChecks, bends, boardFrom, chiefText, readSeed, runSir, sectors, seedGraph } from "@/lib/nuvem-bot";
-import { copy, sayRisk, sayVerdict, type Lang } from "@/lib/nuvem-lang";
-import { QuadroBot } from "@/components/quadro-board";
-
-export const Route = createFileRoute("/nuvem")({
-  head: () => ({ meta: [{ title: "nuvem.bot" }] }),
-  component: NuvemPage,
-});
+import { simulate, type SimResult, type SectorId } from "@/lib/sim-engine";
 
 function CurvePanel({ title, note, result, adopt, stop }: { title: string; note: string; result: SimResult; adopt: string; stop: string[] }) {
   const points = [result.startAdhesion, ...result.feed.map((round) => round.adhesion)];
