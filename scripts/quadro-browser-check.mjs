@@ -10,7 +10,7 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (err) => errors.push(err.message));
-    await page.goto("http://127.0.0.1:8081/", { waitUntil: "networkidle" });
+    await page.goto("http://127.0.0.1:8081/nuvem", { waitUntil: "networkidle" });
     await page.getByRole("status").filter({ hasText: "Salvo neste navegador" }).waitFor();
     await page.locator("#quadro-chat").fill("Crie uma nota: Projeto seguro");
     await page.getByRole("button", { name: "Enviar", exact: true }).click();

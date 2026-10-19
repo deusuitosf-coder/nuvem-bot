@@ -19,6 +19,7 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --no-audit --no-fund
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run check
       - run: npx playwright install --with-deps chromium
       - name: Verify desktop and mobile rendering
@@ -38,6 +39,8 @@ jobs:
           done
           node scripts/browser-smoke.mjs http://127.0.0.1:8081/ "/workspace/screenshots/built.png" --baseline "/workspace/screenshots/dev.json"
           node scripts/quadro-browser-check.mjs
+          node scripts/security-browser-check.mjs
+          node scripts/landing-browser-check.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

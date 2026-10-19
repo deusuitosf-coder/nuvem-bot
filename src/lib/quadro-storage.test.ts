@@ -42,3 +42,18 @@ test("new notes cannot reuse an imported identifier with gaps", () => {
   assert.equal(new Set(board.notes.map((n) => n.id)).size, 3);
   assert.deepEqual(parseBoard(serializeBoard(board)), board);
 });
+
+test("oversized or excessive backups fail without mutating existing boards", () => {
+  const original = applyTool(emptyBoard(), { name: "criar_nota", args: { texto: "Preservar" } }).board;
+  const snapshot = serializeBoard(original);
+  assert.throws(() => parseBoard(" ".repeat(2_000_001)), /limite/);
+  const huge = { notes: Array.from({ length: 2001 }, (_, i) => ({ ...original.notes[0], id: `n${i}` })), boxes: [], arrows: [] };
+  assert.throws(() => parseBoard(JSON.stringify(huge)), /limite/);
+  assert.equal(serializeBoard(original), snapshot);
+});
+
+test("untrusted JSON properties cannot pollute object prototypes", () => {
+  const board = parseBoard('{"__proto__":{"compromised":true},"notes":[],"boxes":[],"arrows":[]}');
+  assert.equal(Object.prototype.hasOwnProperty.call(board, "__proto__"), false);
+  assert.equal(({} as Record<string, unknown>).compromised, undefined);
+});

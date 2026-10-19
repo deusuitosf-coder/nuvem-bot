@@ -10,14 +10,16 @@ export function defenseHeaders({ https = false, csp = false } = {}) {
     headers["content-security-policy"] = [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' https://grok.com",
+      "script-src-attr 'none'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: blob:",
       "connect-src 'self'",
       "object-src 'none'",
-      "base-uri 'self'",
+      "base-uri 'none'",
       "form-action 'self'",
       "frame-ancestors 'self' https://grok.com https://*.grok.com https://*.grok-sandbox.com",
+      ...(https ? ["upgrade-insecure-requests"] : []),
     ].join("; ");
   }
   return headers;
