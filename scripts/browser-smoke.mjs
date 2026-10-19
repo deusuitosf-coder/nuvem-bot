@@ -100,6 +100,7 @@ try {
     const errors = { consoleErrors: [], pageErrors: [] };
     const page = await browser.newPage({
       viewport: { width: vp.width, height: vp.height },
+      locale: "pt-BR",
     });
     page.on("console", (msg) => {
       if (msg.type() === "error") errors.consoleErrors.push(msg.text());
@@ -110,6 +111,13 @@ try {
     const resp = await page.goto(url, { waitUntil: "domcontentloaded", timeout: timeoutMs });
     const status = resp?.status() ?? 0;
     await page.waitForTimeout(1000);
+    // The board enables its input after client hydration and local draft load.
+    // Wait before screenshotting: Playwright's caret hiding can otherwise
+    // mutate SSR input styles while React is still hydrating them.
+    await page.waitForFunction(() => {
+      const input = document.querySelector("#quadro-chat");
+      return !input || !input.disabled;
+    }, undefined, { timeout: timeoutMs });
 
     const title = await page.title();
     const hasCanvas = (await page.locator("canvas").count()) > 0;
@@ -121,7 +129,7 @@ try {
       const el = document.documentElement;
       return el.scrollWidth > el.clientWidth + 1;
     });
-    await page.screenshot({ path: vp.screenshot, fullPage: false });
+    await page.screenshot({ path: vp.screenshot, fullPage: false, caret: "initial" });
     await page.close();
 
     viewports[vp.name] = {

@@ -34,8 +34,10 @@ function slot(index: number) {
 }
 
 function nextId(board: Board, prefix: string) {
-  const used = [...board.notes, ...board.boxes, ...board.arrows].filter((item) => item.id.startsWith(prefix)).length;
-  return `${prefix}${used + 1}`;
+  const used = new Set([...board.notes, ...board.boxes, ...board.arrows].map((item) => item.id));
+  let index = 1;
+  while (used.has(`${prefix}${index}`)) index += 1;
+  return `${prefix}${index}`;
 }
 
 function findItem(board: Board, label: string) {
@@ -191,7 +193,7 @@ export function plan(text: string): ToolCall[] {
     return [{ name: "criar_caixa", args: { titulo } }];
   }
   if (/nota/i.test(clean)) {
-    const texto = clean.match(/nota\s+(.+)/i)?.[1] ?? PROBLEMS[0];
+    const texto = clean.match(/nota\s*:?\s+(.+)/i)?.[1] ?? PROBLEMS[0];
     return [{ name: "criar_nota", args: { texto } }];
   }
   return [];
