@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { firstGoal, layoutFor, type Goal, type Layout, type Visit } from "@/lib/adapt";
+import { limparConversas } from "@/lib/limpar";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [{ title: "Camaleão" }] }),
@@ -27,6 +28,7 @@ function AdaptPage() {
 
   useEffect(() => {
     const count = Number(localStorage.getItem("iface-visits") ?? "0");
+    limparConversas(localStorage);
     const next: Visit = count > 0 ? "de novo" : "primeira";
     setVisit(next);
     setGoal(firstGoal(next));
@@ -141,7 +143,7 @@ function Explicacao() {
     },
     {
       titulo: "Para quem é",
-      texto: "Para quem quer mostrar uma tela que se adapta à visita, numa conversa ou numa banca. Não é para banco, governo ou quem precisa ler contrato e prever venda.",
+      texto: "Para quem quer mostrar uma tela que se adapta à visita, numa banca ou no computador. Não é para banco, governo ou quem precisa ler contrato e prever venda.",
     },
     {
       titulo: "O que ele não faz",
