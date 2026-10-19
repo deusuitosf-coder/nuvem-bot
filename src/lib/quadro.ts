@@ -34,8 +34,10 @@ function slot(index: number) {
 }
 
 function nextId(board: Board, prefix: string) {
-  const used = [...board.notes, ...board.boxes, ...board.arrows].filter((item) => item.id.startsWith(prefix)).length;
-  return `${prefix}${used + 1}`;
+  const used = new Set([...board.notes, ...board.boxes, ...board.arrows].map((item) => item.id));
+  let index = 1;
+  while (used.has(`${prefix}${index}`)) index += 1;
+  return `${prefix}${index}`;
 }
 
 function findItem(board: Board, label: string) {

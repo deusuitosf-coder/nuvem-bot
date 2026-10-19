@@ -34,3 +34,11 @@ test("import appends a backup and remaps connections without changing originals"
   assert.notEqual(merged.arrows[3].de, original.arrows[0].de);
   assert.equal(merged.arrows[3].para, merged.boxes[1].id);
 });
+
+test("new notes cannot reuse an imported identifier with gaps", () => {
+  let board = applyTool(emptyBoard(), { name: "criar_nota", args: { texto: "Original" } }).board;
+  board.notes.push({ ...board.notes[0], id: "nota3", texto: "Importada" });
+  board = applyTool(board, { name: "criar_nota", args: { texto: "Nova" } }).board;
+  assert.equal(new Set(board.notes.map((n) => n.id)).size, 3);
+  assert.deepEqual(parseBoard(serializeBoard(board)), board);
+});
