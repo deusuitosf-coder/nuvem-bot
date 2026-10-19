@@ -167,8 +167,8 @@ function NuvemPage() {
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-4 py-6 font-sans sm:px-8 sm:py-10">
       <header className="pb-2">
-        <div className="flex items-center justify-between gap-3">
-          <a href="/nuvem" className="flex items-center gap-3 text-navy" aria-label="Nuven Bot — início"><img src="/nuven-logo.svg" alt="" width="40" height="40" /><span className="font-medium">Nuven Bot</span></a>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <a href="/nuvem" className="flex items-center gap-3 text-navy" aria-label="Nuven Bot — início"><img src="/nuven-logo.svg" alt="" width="64" height="64" className="h-14 w-14 sm:h-16 sm:w-16" /><span className="font-display text-3xl sm:text-4xl">Nuven Bot</span></a>
           <div className="flex gap-1">
             {(["pt", "en", "es"] as const).map((item) => (
               <button

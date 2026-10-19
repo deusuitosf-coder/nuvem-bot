@@ -1,0 +1,41 @@
+import assert from "node:assert/strict";
+import { chromium } from "playwright";
+const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+try {
+  for (const width of [1280, 390]) {
+    const context = await browser.newContext({ locale: "pt-BR", viewport: { width, height: 844 } });
+    const page = await context.newPage();
+    const errors = [];
+    page.on("pageerror", (err) => errors.push(err.message));
+    await page.goto("http://127.0.0.1:8081/", { waitUntil: "networkidle" });
+    await page.getByRole("heading", { name: /Organize o pensamento/ }).waitFor();
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
+    const brand = page.getByRole("link", { name: "Nuven Bot — início", exact: true });
+    assert.ok(await brand.locator("img").evaluate((el) => el.getBoundingClientRect().width) >= 64);
+    await page.screenshot({ path: `/workspace/screenshots/home-${width}.png`, caret: "initial" });
+    await page.getByLabel("Empresa ou projeto (opcional)", { exact: true }).fill("Exemplo de empresa");
+    await page.getByLabel("Quantidade de serviços", { exact: true }).fill("3");
+    await page.getByLabel("O que você precisa receber?", { exact: true }).fill("Organizar uma demanda simples");
+    await page.getByRole("button", { name: "Gerar rascunho de orçamento", exact: true }).click();
+    await page.locator("#quote-result").waitFor();
+    assert.match(await page.locator("#quote-result").innerText(), /300,00/);
+    const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Baixar orçamento", exact: true }).click()]);
+    assert.equal(download.suggestedFilename(), "nuven-bot-orcamento.txt");
+    await page.getByLabel("Tipo de serviço", { exact: true }).selectOption("documentos");
+    assert.equal(await page.locator("#quote-result").count(), 0, "editing scope must invalidate an outdated estimate");
+    await page.getByLabel("Quantidade de documentos", { exact: true }).fill("2");
+    await page.getByLabel("Total de páginas", { exact: true }).fill("10");
+    await page.getByRole("button", { name: "Gerar rascunho de orçamento", exact: true }).click();
+    await page.locator("#quote-result").waitFor();
+    assert.match(await page.locator("#quote-result").innerText(), /A partir de/);
+    assert.match(await page.locator("#quote-result").innerText(), /800,00/);
+    assert.match(await page.locator("#quote-result").innerText(), /Nenhum pedido foi enviado/);
+    await page.locator("#quote-result").screenshot({ path: `/workspace/screenshots/quote-${width}.png`, caret: "initial" });
+    await page.getByRole("link", { name: "Conhecer o quadro", exact: true }).click();
+    await page.locator("#quadro-chat:not(:disabled)").waitFor();
+    assert.equal(new URL(page.url()).pathname, "/nuvem");
+    assert.deepEqual(errors, []);
+    await context.close();
+    console.log(`Landing and quote checks passed at ${width}px`);
+  }
+} finally { await browser.close(); }

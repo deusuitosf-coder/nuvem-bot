@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { NuvenHome } from "@/components/nuven-home";
 import { firstGoal, layoutFor, type Goal, type Layout, type Visit } from "@/lib/adapt";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Interface adaptativa" }] }),
+  head: () => ({ meta: [{ title: "Nuven Bot — organize suas ideias" }] }),
   component: AdaptPage,
 });
 
@@ -34,7 +35,7 @@ function AdaptPage() {
   }, []);
 
   return (
-    <main className="mx-auto min-h-screen max-w-3xl px-4 py-6 font-sans sm:px-8 sm:py-10">
+    <NuvenHome><details className="border-t border-line py-6"><summary className="min-h-11 cursor-pointer text-sm text-navy">Personalizar a apresentação desta página</summary><section className="mx-auto max-w-3xl py-6">
       <header className="flex items-center justify-between gap-3">
         <p className="text-xs font-medium tracking-[0.18em] text-sky">INTERFACE ADAPTATIVA</p>
         <p className="text-sm text-muted">{visit === "primeira" ? "Primeira visita" : "Você já voltou"}</p>
@@ -58,7 +59,7 @@ function AdaptPage() {
         </div>
       </fieldset>
       <Body layout={layout} visit={visit} goal={goal} />
-    </main>
+    </section></details></NuvenHome>
   );
 }
 

@@ -60,7 +60,7 @@ export const copy = {
     d5b: "Desça até Mudança e leve o controle a 40%. A palavra muda. Volte a 15%. A palavra volta. A mesma frase dá o mesmo resultado.",
     more: "O resto da conta",
     payTitle: "Pagamento",
-    payBody: "O exemplo da página é grátis. A frase da empresa tem dois preços, escolhidos antes: R$ 800, a palavra na hora; R$ 100, a palavra em sete dias. Achar caro no meio não muda o preço.",
+    payBody: "Proposta de lançamento: 2 usos grátis; serviços simples por R$ 100; projetos empresariais e documentais a partir de R$ 800. O valor varia conforme volume e complexidade, com orçamento antes da contratação. O controle dos usos gratuitos ainda não está ativo.",
     payHow: "Cobrança automática e confirmação de Pix ainda não estão disponíveis neste aplicativo. Nenhum pagamento é processado nesta página.",
   },
   en: {
@@ -101,7 +101,7 @@ export const copy = {
     d5b: "Go to Change and move it to 40%. The word changes. Move it back to 15%. The word returns. The same sentence gives the same result.",
     more: "The rest of the calculation",
     payTitle: "Payment",
-    payBody: "The example on the page is free. A company's own sentence has two prices, chosen first: R$ 800, the word at once; R$ 100, the word in seven days. Finding it expensive halfway does not change the price.",
+    payBody: "Launch proposal: 2 free uses; simple services at R$ 100; business and document projects from R$ 800. Price varies with volume and complexity and requires a quote before purchase. Free-use enforcement is not active yet.",
     payHow: "Automatic billing and Pix confirmation are not available in this app yet. This page does not process payments.",
   },
   es: {
@@ -142,7 +142,7 @@ export const copy = {
     d5b: "Baje a Cambio y llévelo a 40%. La palabra cambia. Vuelva a 15%. La palabra regresa. La misma frase da el mismo resultado.",
     more: "El resto de la cuenta",
     payTitle: "Pago",
-    payBody: "El ejemplo de la página es gratis. La frase de la empresa tiene dos precios, elegidos antes: R$ 800, la palabra al momento; R$ 100, la palabra en siete días. Parecer caro a mitad no cambia el precio.",
+    payBody: "Propuesta de lanzamiento: 2 usos gratis; servicios simples por R$ 100; proyectos empresariales y documentales desde R$ 800. El valor depende del volumen y la complejidad, con presupuesto previo. El control de usos gratuitos aún no está activo.",
     payHow: "El cobro automático y la confirmación Pix aún no están disponibles en esta aplicación. Esta página no procesa pagos.",
   },
 } as const;
