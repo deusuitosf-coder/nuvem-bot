@@ -37,6 +37,11 @@
 .line-in-late { animation: line-in 520ms ease 140ms both; }
 .word-in { display: inline-block; animation: line-in 420ms ease both; }
 
+.punch {
+  display: inline-block;
+  animation: line-in 560ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .rise, .line-in, .line-in-late, .word-in { animation: none; }
+  .rise, .line-in, .line-in-late, .word-in, .punch { animation: none; }
 }
