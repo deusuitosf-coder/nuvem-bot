@@ -122,22 +122,45 @@ function Body({ layout, visit, goal }: { layout: Layout; visit: Visit; goal: Goa
 }
 
 function Explicacao() {
+  const blocos = [
+    {
+      titulo: "O produto",
+      texto: "É uma página que muda de forma. Na primeira visita ela abre larga. Na volta, encurta. Os botões Ver, Usar e Explicar trocam o miolo. A mesma escolha devolve a mesma tela, neste aparelho.",
+    },
+    {
+      titulo: "O que o cliente recebe",
+      texto: "Na tela, a explicação e os três modos. No pago, um pendrive com esta mesma página para abrir no computador dele, sem depender do endereço da internet.",
+    },
+    {
+      titulo: "Grátis",
+      texto: "Olhar, trocar Ver, Usar e Explicar, e ler tudo que está escrito aqui. Serve para decidir se o produto serve, antes de pagar.",
+    },
+    {
+      titulo: "Pago",
+      texto: "O pendrive só sai depois do Pix. O preço é combinado antes do envio. Sem o pagamento, nada é postado. O número do cartão não se digita nesta página.",
+    },
+    {
+      titulo: "Para quem é",
+      texto: "Para quem quer mostrar uma tela que se adapta à visita, numa conversa ou numa banca. Não é para banco, governo ou quem precisa ler contrato e prever venda.",
+    },
+    {
+      titulo: "O que ele não faz",
+      texto: "Não lê PDF. Não prevê o mercado. Não cobra sozinho. Não trabalha com o navegador fechado. Não protege o computador contra vírus. O clique fica só neste aparelho.",
+    },
+  ];
   return (
     <section className="mt-10 grid gap-4">
-      <div className="rounded-[var(--radius-card)] border border-line bg-surface p-4">
-        <h2 className="font-display text-xl text-navy">O que o site faz</h2>
-        <p className="mt-3 text-sm leading-relaxed text-ink">A página muda conforme a visita e a escolha. Na primeira vez ela abre larga. Na volta ela encurta. Ver, Usar e Explicar trocam o miolo da tela. A mesma escolha devolve a mesma tela.</p>
-        <p className="mt-3 text-sm leading-relaxed text-ink">Ela não lê documento, não prevê venda e não continua trabalhando com o navegador fechado. O que você clica fica neste aparelho.</p>
+      <div>
+        <h2 className="font-display text-2xl text-navy">Informação do produto</h2>
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">Tudo o que o cliente precisa saber está aqui. A tela de cima muda. Este texto não muda.</p>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <article className="rounded-[var(--radius-card)] border border-line bg-surface p-4">
-          <h2 className="font-display text-xl text-navy">Grátis</h2>
-          <p className="mt-3 text-sm leading-relaxed text-ink">Olhar, trocar os três botões e ler esta explicação não custa nada. É para entender o produto antes de pagar.</p>
-        </article>
-        <article className="rounded-[var(--radius-card)] bg-navy p-4 text-surface">
-          <h2 className="font-display text-xl">Pago, no pendrive</h2>
-          <p className="mt-3 text-sm leading-relaxed text-mist">O produto que você leva vai num pendrive, depois do Pix. O preço é combinado antes. Sem pagamento, o pendrive não sai. Cartão não se digita nesta página.</p>
-        </article>
+      <div className="grid gap-3">
+        {blocos.map((bloco) => (
+          <article key={bloco.titulo} className="rounded-[var(--radius-card)] border border-line bg-surface p-4">
+            <h3 className="font-display text-xl text-navy">{bloco.titulo}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-ink">{bloco.texto}</p>
+          </article>
+        ))}
       </div>
     </section>
   );
