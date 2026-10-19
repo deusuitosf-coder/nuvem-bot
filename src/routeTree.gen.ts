@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApresentacaoRouteImport } from './routes/apresentacao'
+import { Route as JornalRouteImport } from './routes/jornal'
 import { Route as MedicaoRouteImport } from './routes/medicao'
 import { Route as NuvemRouteImport } from './routes/nuvem'
 import { Route as SimuladorRouteImport } from './routes/simulador'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const ApresentacaoRoute = ApresentacaoRouteImport.update({
   id: '/apresentacao',
   path: '/apresentacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JornalRoute = JornalRouteImport.update({
+  id: '/jornal',
+  path: '/jornal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MedicaoRoute = MedicaoRouteImport.update({
@@ -50,6 +56,7 @@ const VersoesRoute = VersoesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apresentacao': typeof ApresentacaoRoute
+  '/jornal': typeof JornalRoute
   '/medicao': typeof MedicaoRoute
   '/nuvem': typeof NuvemRoute
   '/simulador': typeof SimuladorRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apresentacao': typeof ApresentacaoRoute
+  '/jornal': typeof JornalRoute
   '/medicao': typeof MedicaoRoute
   '/nuvem': typeof NuvemRoute
   '/simulador': typeof SimuladorRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/apresentacao': typeof ApresentacaoRoute
+  '/jornal': typeof JornalRoute
   '/medicao': typeof MedicaoRoute
   '/nuvem': typeof NuvemRoute
   '/simulador': typeof SimuladorRoute
@@ -75,13 +84,27 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/apresentacao' | '/medicao' | '/nuvem' | '/simulador' | '/versoes'
+    | '/'
+    | '/apresentacao'
+    | '/jornal'
+    | '/medicao'
+    | '/nuvem'
+    | '/simulador'
+    | '/versoes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/apresentacao' | '/medicao' | '/nuvem' | '/simulador' | '/versoes'
+  to:
+    | '/'
+    | '/apresentacao'
+    | '/jornal'
+    | '/medicao'
+    | '/nuvem'
+    | '/simulador'
+    | '/versoes'
   id:
     | '__root__'
     | '/'
     | '/apresentacao'
+    | '/jornal'
     | '/medicao'
     | '/nuvem'
     | '/simulador'
@@ -91,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApresentacaoRoute: typeof ApresentacaoRoute
+  JornalRoute: typeof JornalRoute
   MedicaoRoute: typeof MedicaoRoute
   NuvemRoute: typeof NuvemRoute
   SimuladorRoute: typeof SimuladorRoute
@@ -111,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/apresentacao'
       fullPath: '/apresentacao'
       preLoaderRoute: typeof ApresentacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jornal': {
+      id: '/jornal'
+      path: '/jornal'
+      fullPath: '/jornal'
+      preLoaderRoute: typeof JornalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/medicao': {
@@ -147,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApresentacaoRoute: ApresentacaoRoute,
+  JornalRoute: JornalRoute,
   MedicaoRoute: MedicaoRoute,
   NuvemRoute: NuvemRoute,
   SimuladorRoute: SimuladorRoute,

@@ -16,6 +16,7 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
         </a>
         <nav aria-label="Navegação principal" className="flex flex-wrap items-center gap-5 text-sm text-navy">
           <a href="#como-funciona" className="min-h-11 content-center">Como funciona</a>
+          <a href="/jornal" className="min-h-11 content-center">Tiragem</a>
           <a href="#orcamento" onClick={openQuote} className="min-h-11 content-center">Orçamento</a>
           <a href="/nuvem" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-navy px-5 text-surface">Abrir demonstração <ArrowRight size={16} aria-hidden="true" /></a>
         </nav>
