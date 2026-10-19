@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { firstGoal, layoutFor, type Goal, type Layout, type Visit } from "@/lib/adapt";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Nuven Bot — explore sua ideia antes de investir" }] }),
+  head: () => ({ meta: [{ title: "Camaleão" }] }),
   component: AdaptPage,
 });
 
@@ -35,15 +35,8 @@ function AdaptPage() {
 
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-4 py-6 font-sans sm:px-8 sm:py-10">
-      <section aria-labelledby="nuven-intro" className="mb-10 rounded-2xl border border-line bg-surface p-6 sm:p-8">
-        <a href="/nuvem" className="inline-flex items-center gap-3 text-navy"><img src="/nuven-logo.svg" alt="" width="64" height="64" /><span className="font-display text-3xl sm:text-4xl">Nuven Bot</span></a>
-        <h1 id="nuven-intro" className="mt-6 font-display text-4xl leading-tight text-navy sm:text-5xl">Antes de investir seu dinheiro, explore sua ideia.</h1>
-        <p className="mt-5 text-lg leading-relaxed text-muted">Organize suas estratégias, compare cenários e enxergue os pontos de atenção antes de decidir.</p>
-        <a href="/nuvem" className="mt-6 inline-flex min-h-12 items-center rounded-xl bg-navy px-6 py-3 font-medium text-surface">Explorar minha ideia</a>
-        <p className="mt-4 text-sm leading-relaxed text-muted">As simulações ajudam a refletir. Não preveem o mercado nem garantem resultados.</p>
-      </section>
       <header className="flex items-center justify-between gap-3">
-        <p className="text-xs font-medium tracking-[0.18em] text-sky">INTERFACE ADAPTATIVA</p>
+        <p className="text-xs font-medium tracking-[0.18em] text-sky">CAMALEÃO</p>
         <p className="text-sm text-muted">{visit === "primeira" ? "Primeira visita" : "Você já voltou"}</p>
       </header>
       <Intro layout={layout} />
@@ -132,7 +125,7 @@ function Explicacao() {
   const blocos = [
     {
       titulo: "O produto",
-      texto: "É uma página que muda de forma. Na primeira visita ela abre larga. Na volta, encurta. Os botões Ver, Usar e Explicar trocam o miolo. A mesma escolha devolve a mesma tela, neste aparelho.",
+      texto: "O nome é Camaleão. É uma página que muda de forma. Na primeira visita ela abre larga. Na volta, encurta. Os botões Ver, Usar e Explicar trocam o miolo. A mesma escolha devolve a mesma tela, neste aparelho.",
     },
     {
       titulo: "O que o cliente recebe",
@@ -158,7 +151,7 @@ function Explicacao() {
   return (
     <section className="mt-10 grid gap-4">
       <div>
-        <h2 className="font-display text-2xl text-navy">Informação do produto</h2>
+        <h2 className="font-display text-2xl text-navy">Informação do Camaleão</h2>
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">Tudo o que o cliente precisa saber está aqui. A tela de cima muda. Este texto não muda.</p>
       </div>
       <div className="grid gap-3">
