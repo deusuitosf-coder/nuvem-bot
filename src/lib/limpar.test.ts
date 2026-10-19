@@ -6,5 +6,5 @@ test("apaga as conversas antigas e não mexe na visita do Camaleão", () => {
   const removed: string[] = [];
   limparConversas({ removeItem: (key) => removed.push(key) });
   assert.deepEqual(removed, [...chavesAntigas]);
-  assert.equal(removed.includes("iface-visits"), false);
+  assert.equal((removed as string[]).includes("iface-visits"), false);
 });
