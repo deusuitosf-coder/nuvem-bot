@@ -58,6 +58,7 @@ function AdaptPage() {
         </div>
       </fieldset>
       <Body layout={layout} visit={visit} goal={goal} />
+      <Explicacao />
     </main>
   );
 }
@@ -74,7 +75,7 @@ function Intro({ layout }: { layout: Layout }) {
     return (
       <div key={layout} className="rise mt-8 max-w-xl">
         <h1 className="font-display text-3xl leading-snug text-navy">Quatro passos. A tela segue a escolha.</h1>
-        <p className="mt-4 text-base leading-relaxed text-muted">Nada aqui lê documento, cobra ou adivinha o próximo clique. O sinal é só se você já abriu esta página neste aparelho.</p>
+        <p className="mt-4 text-base leading-relaxed text-muted">A explicação completa está no fim da página. O sinal é só se você já abriu esta página neste aparelho.</p>
       </div>
     );
   }
@@ -117,5 +118,27 @@ function Body({ layout, visit, goal }: { layout: Layout; visit: Visit; goal: Goa
         </li>
       ))}
     </ol>
+  );
+}
+
+function Explicacao() {
+  return (
+    <section className="mt-10 grid gap-4">
+      <div className="rounded-[var(--radius-card)] border border-line bg-surface p-4">
+        <h2 className="font-display text-xl text-navy">O que o site faz</h2>
+        <p className="mt-3 text-sm leading-relaxed text-ink">A página muda conforme a visita e a escolha. Na primeira vez ela abre larga. Na volta ela encurta. Ver, Usar e Explicar trocam o miolo da tela. A mesma escolha devolve a mesma tela.</p>
+        <p className="mt-3 text-sm leading-relaxed text-ink">Ela não lê documento, não prevê venda e não continua trabalhando com o navegador fechado. O que você clica fica neste aparelho.</p>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <article className="rounded-[var(--radius-card)] border border-line bg-surface p-4">
+          <h2 className="font-display text-xl text-navy">Grátis</h2>
+          <p className="mt-3 text-sm leading-relaxed text-ink">Olhar, trocar os três botões e ler esta explicação não custa nada. É para entender o produto antes de pagar.</p>
+        </article>
+        <article className="rounded-[var(--radius-card)] bg-navy p-4 text-surface">
+          <h2 className="font-display text-xl">Pago, no pendrive</h2>
+          <p className="mt-3 text-sm leading-relaxed text-mist">O produto que você leva vai num pendrive, depois do Pix. O preço é combinado antes. Sem pagamento, o pendrive não sai. Cartão não se digita nesta página.</p>
+        </article>
+      </div>
+    </section>
   );
 }
