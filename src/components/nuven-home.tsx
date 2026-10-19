@@ -70,7 +70,7 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
             ["Equipes e empresas", "Mapeie processos e visualize as prioridades de um projeto."],
             ["Professores e estudantes", "Conecte assuntos, monte resumos e planeje trabalhos."],
             ["Criadores de conteúdo", "Reúna pautas, roteiros e ideias para suas publicações."],
-            ["Documentos", "Organize a lista de documentos, o total de páginas e o escopo do seu pedido de orçamento."],
+            ["Documentos", "Organize a lista de documentos, o total de páginas e o escopo do seu pedido de orçamento. No lançamento: 1 teste grátis com um documento de poucas páginas. Limite de páginas a definir; processamento e controle da gratuidade ainda em preparação."],
           ].map(([title, body]) => <article key={title} className="break-inside-avoid border-t border-line pt-4"><h3 className={`font-display text-2xl leading-snug text-sky ${title === "Criadores de conteúdo" ? "whitespace-nowrap" : ""}`}>{title}</h3><p className="mt-2 leading-relaxed text-muted">{body}</p></article>)}
         </div>
       </section>
