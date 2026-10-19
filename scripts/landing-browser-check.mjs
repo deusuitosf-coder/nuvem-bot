@@ -8,7 +8,7 @@ try {
     const errors = [];
     page.on("pageerror", (err) => errors.push(err.message));
     await page.goto("http://127.0.0.1:8081/", { waitUntil: "networkidle" });
-    await page.getByRole("heading", { name: /Organize o pensamento/ }).waitFor();
+    await page.getByRole("heading", { name: /Antes de investir seu dinheiro/ }).waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
     const brand = page.getByRole("link", { name: "Nuven Bot — início", exact: true });
     assert.ok(await brand.locator("img").evaluate((el) => el.getBoundingClientRect().width) >= 64);
@@ -33,7 +33,7 @@ try {
     assert.match(await page.locator("#quote-result").innerText(), /800,00/);
     assert.match(await page.locator("#quote-result").innerText(), /Nenhum pedido foi enviado/);
     await page.locator("#quote-result").screenshot({ path: `/workspace/screenshots/quote-${width}.png`, caret: "initial" });
-    await page.getByRole("link", { name: "Conhecer o quadro", exact: true }).click();
+    await page.getByRole("link", { name: "Explorar minha ideia", exact: true }).click();
     await page.locator("#quadro-chat:not(:disabled)").waitFor();
     assert.equal(new URL(page.url()).pathname, "/nuvem");
     assert.deepEqual(errors, []);

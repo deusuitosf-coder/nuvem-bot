@@ -3,6 +3,10 @@ import { QuoteBuilder } from "@/components/quote-builder";
 import { ArrowRight, FileText, GitBranch, StickyNote } from "lucide-react";
 
 export function NuvenHome({ children }: { children?: ReactNode }) {
+  function openQuote() {
+    const details = document.getElementById("orcamento");
+    if (details instanceof HTMLDetailsElement) details.open = true;
+  }
   return (
     <main className="mx-auto max-w-6xl px-5 py-6 font-sans text-ink sm:px-8 sm:py-8">
       <header className="flex flex-wrap items-center justify-between gap-6 border-b border-line pb-6">
@@ -12,7 +16,7 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
         </a>
         <nav aria-label="Navegação principal" className="flex flex-wrap items-center gap-5 text-sm text-navy">
           <a href="#como-funciona" className="min-h-11 content-center">Como funciona</a>
-          <a href="#orcamento" className="min-h-11 content-center">Orçamento</a>
+          <a href="#orcamento" onClick={openQuote} className="min-h-11 content-center">Orçamento</a>
           <a href="/nuvem" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-navy px-5 text-surface">Abrir demonstração <ArrowRight size={16} aria-hidden="true" /></a>
         </nav>
       </header>
@@ -20,12 +24,13 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
       <section className="grid items-center gap-10 py-12 sm:py-20 lg:grid-cols-2">
         <div className="rise">
           <p className="text-sm font-medium tracking-widest text-sky">UM ESPAÇO PARA TIRAR IDEIAS DO PAPEL</p>
-          <h1 className="mt-5 font-display text-5xl leading-tight text-navy sm:text-6xl">Organize o pensamento.<br /><span className="text-sky">Enxergue o próximo passo.</span></h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">O Nuven Bot reúne notas, conexões e comandos simples em um quadro visual. Transforme uma ideia solta em um plano que você consegue acompanhar.</p>
+          <h1 className="mt-5 font-display text-5xl leading-tight text-navy sm:text-6xl">Antes de investir seu dinheiro,<br /><span className="text-sky">explore sua ideia.</span></h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">Organize suas estratégias, compare cenários e enxergue os pontos de atenção antes de decidir. Reúna notas e conecte as etapas do seu plano no quadro visual.</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="/nuvem" className="inline-flex min-h-12 items-center gap-3 rounded-xl bg-navy px-6 py-3 font-medium text-surface">Conhecer o quadro <ArrowRight size={20} aria-hidden="true" /></a>
+            <a href="/nuvem" className="inline-flex min-h-12 items-center gap-3 rounded-xl bg-navy px-6 py-3 font-medium text-surface">Explorar minha ideia <ArrowRight size={20} aria-hidden="true" /></a>
             <a href="#como-funciona" className="inline-flex min-h-12 items-center rounded-xl border border-line bg-surface px-6 py-3 text-navy">Ver o que já funciona</a>
           </div>
+          <p className="mt-4 text-sm text-muted">As simulações ajudam a refletir. Não preveem o mercado nem garantem resultados.</p>
           <p className="mt-4 text-lg font-medium text-sky">No lançamento: experimente 2 vezes grátis.</p><p className="mt-2 text-sm text-muted">Oferta em preparação. A demonstração atual não aplica limite de usos nem realiza cobrança.</p>
         </div>
         <div className="rounded-3xl border border-line bg-mist p-5 sm:p-8" aria-label="Exemplo ilustrativo de organização de um projeto">
@@ -56,6 +61,23 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
         <p className="mt-8 rounded-xl bg-mist p-5 text-sm leading-relaxed text-navy">Esta é uma versão demonstrativa com comandos locais. Login, colaboração na nuvem, IA generativa e processamento automático de documentos ainda não estão disponíveis. Os seus quadros não sincronizam entre aparelhos.</p>
       </section>
 
+      <section id="para-quem" className="border-t border-line py-12">
+        <h2 className="font-display text-3xl text-navy sm:text-4xl">Um próximo passo para cada rotina.</h2>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            ["Autônomos", "Separe pedidos, entregas e etapas de cada trabalho."],
+            ["Lojas e pequenos negócios", "Planeje uma promoção e organize as ações antes de investir."],
+            ["Equipes e empresas", "Mapeie processos e visualize as prioridades de um projeto."],
+            ["Professores e estudantes", "Conecte assuntos, monte resumos e planeje trabalhos."],
+            ["Criadores de conteúdo", "Reúna pautas, roteiros e ideias para suas publicações."],
+            ["Seus projetos pessoais", "Organize estudos, objetivos e os próximos passos da sua ideia."],
+          ].map(([title, body]) => <article key={title} className="border-t border-line pt-4"><h3 className="text-lg font-medium text-navy">{title}</h3><p className="mt-2 leading-relaxed text-muted">{body}</p></article>)}
+        </div>
+      </section>
+      <section className="grid gap-6 border-t border-line py-12 sm:grid-cols-2" aria-label="Escolha por onde começar">
+        <article className="rounded-2xl bg-mist p-6"><h2 className="font-display text-2xl text-navy">Explore um cenário</h2><p className="mt-3 leading-relaxed text-muted">Ajuste a mudança e veja como os cenários demonstrativos respondem. Use a conta como ponto de reflexão.</p><a href="/nuvem#calculadora" className="mt-4 inline-flex min-h-11 items-center text-navy underline">Abrir simulação</a></article>
+        <article className="rounded-2xl bg-mist p-6"><h2 className="font-display text-2xl text-navy">Organize no quadro</h2><p className="mt-3 leading-relaxed text-muted">Crie notas, conecte ideias e leve um backup. O conteúdo fica salvo neste navegador.</p><a href="/nuvem#quadro" className="mt-4 inline-flex min-h-11 items-center text-navy underline">Abrir meu quadro</a></article>
+      </section>
       <details id="orcamento" className="border-t border-line py-8">
         <summary className="inline-flex min-h-12 cursor-pointer items-center rounded-xl bg-navy px-6 py-3 font-medium text-surface">Fazer orçamento</summary>
         <QuoteBuilder />

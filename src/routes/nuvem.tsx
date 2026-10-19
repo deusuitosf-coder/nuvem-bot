@@ -251,7 +251,7 @@ function NuvemPage() {
       <p className="mt-2 text-sm text-muted">{text.rule}</p>
       <p className="mt-2 text-sm text-ink">{bends(path) ? text.bent(path.join(", ")) : text.straight}</p>
       <p className="mt-2 text-sm text-muted">{text.groups}</p>
-      <section className="mt-4 rounded-[var(--radius-card)] border border-line bg-surface p-4">
+      <section id="calculadora" className="mt-4 rounded-[var(--radius-card)] border border-line bg-surface p-4">
         <h2 className="font-display text-xl text-navy">{text.calc}</h2>
         <label className="mt-3 block text-sm">
           {text.calcDecision}

@@ -74,7 +74,7 @@ export function QuadroBot() {
   const byId = new Map(items.map((item) => [item.id, item]));
 
   return (
-    <section className="mt-4 rounded-[var(--radius-card)] border border-line bg-surface p-4">
+    <section id="quadro" className="mt-4 rounded-[var(--radius-card)] border border-line bg-surface p-4">
       <h2 className="font-display text-xl text-navy">Quadro</h2>
       <p role="status" className="mt-2 text-sm text-muted">{storageMessage}</p>
       <button type="button" disabled={!ready} onClick={exportBoard} className="mt-3 min-h-11 rounded-xl border border-line px-4 text-sm text-navy disabled:opacity-50">Exportar quadro JSON</button>

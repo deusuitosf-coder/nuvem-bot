@@ -1,8 +1,14 @@
 import assert from "node:assert/strict";
 import { chromium } from "playwright";
+import { createServer } from "node:http";
 
 // Isolated local build only: no production writes or live attack traffic.
 const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+const hostileParent = createServer((_req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.end('<iframe src="http://127.0.0.1:8081/nuvem"></iframe>');
+});
+await new Promise((resolve, reject) => { hostileParent.once("error", reject); hostileParent.listen(8082, "127.0.0.1", resolve); });
 try {
   const context = await browser.newContext({ locale: "pt-BR" });
   const page = await context.newPage();
@@ -40,15 +46,19 @@ try {
   assert.deepEqual(errors, []);
   await context.close();
 
-  // Synthetic hostile parent is fulfilled locally; no external site is contacted.
+  // An actual local parent on another origin exercises frame-ancestors.
   const framing = await browser.newContext();
-  await framing.route("http://localhost:8082/**", (route) => route.fulfill({ contentType: "text/html", body: '<iframe src="http://127.0.0.1:8081/nuvem"></iframe>' }));
   const parent = await framing.newPage();
-  const denied = parent.waitForEvent("console", { predicate: (msg) => msg.text().includes("frame-ancestors"), timeout: 15000 });
-  await parent.goto("http://localhost:8082/", { waitUntil: "load" });
-  await denied;
+  const cdp = await framing.newCDPSession(parent);
+  await cdp.send("Audits.enable");
+  const issues = [];
+  cdp.on("Audits.issueAdded", ({ issue }) => issues.push(issue));
+  await parent.goto("http://127.0.0.1:8082/", { waitUntil: "networkidle" });
+  assert.ok(issues.some((issue) => issue.details.contentSecurityPolicyIssueDetails?.violatedDirective.startsWith("frame-ancestors")), JSON.stringify(issues));
+  assert.equal(await parent.frameLocator("iframe").getByRole("heading", { name: "Quadro", exact: true }).count(), 0);
   await framing.close();
   console.log("Security checks passed: real response headers, stored-XSS escaping, inline-handler blocking and hostile-frame blocking.");
 } finally {
   await browser.close();
+  await new Promise((resolve) => hostileParent.close(resolve));
 }
