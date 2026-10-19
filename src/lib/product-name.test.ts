@@ -14,7 +14,7 @@ test("the name is one stable word", () => {
   assert.equal(name.split(" ").length, 1);
 });
 
-test("the page title uses the generated name", () => {
+test("the page title uses the Nuven Bot brand", () => {
   const site = JSON.parse(readFileSync(new URL("./og/site.json", import.meta.url), "utf8")) as { title: string };
-  assert.equal(site.title, generateProductName());
+  assert.equal(site.title, "Nuven Bot");
 });

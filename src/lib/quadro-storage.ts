@@ -36,3 +36,23 @@ export function parseBoard(raw: string): Board {
 export function serializeBoard(board: Board): string {
   return JSON.stringify(parseBoard(JSON.stringify(board)), null, 2);
 }
+
+/** Append a backup; never replace existing notes or reuse their identifiers. */
+export function mergeBoards(current: Board, incoming: Board): Board {
+  const left = parseBoard(JSON.stringify(current));
+  const right = parseBoard(JSON.stringify(incoming));
+  const used = new Set([...left.notes, ...left.boxes, ...left.arrows].map((item) => item.id));
+  const mapping = new Map<string, string>();
+  for (const item of [...right.notes, ...right.boxes, ...right.arrows]) {
+    let next = item.id;
+    let index = 1;
+    while (used.has(next)) next = `${item.kind}${index++}`;
+    used.add(next);
+    mapping.set(item.id, next);
+  }
+  return parseBoard(JSON.stringify({
+    notes: [...left.notes, ...right.notes.map((n) => ({ ...n, id: mapping.get(n.id) }))],
+    boxes: [...left.boxes, ...right.boxes.map((b) => ({ ...b, id: mapping.get(b.id) }))],
+    arrows: [...left.arrows, ...right.arrows.map((a) => ({ ...a, id: mapping.get(a.id), de: mapping.get(a.de), para: mapping.get(a.para) }))],
+  }));
+}

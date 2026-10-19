@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { BOARD_STORAGE_KEY, parseBoard, serializeBoard } from "@/lib/quadro-storage";
+import { useEffect, useRef, useState } from "react";
+import { BOARD_STORAGE_KEY, mergeBoards, parseBoard, serializeBoard } from "@/lib/quadro-storage";
 import { plainText } from "@/lib/guardrails";
 import { emptyBoard, runTurn, type Board, type Caixa, type Note } from "@/lib/quadro";
 
@@ -17,6 +17,8 @@ function center(item: Note | Caixa) {
 
 export function QuadroBot() {
   const [board, setBoard] = useState<Board>(emptyBoard);
+  const boardRef = useRef(board);
+  boardRef.current = board;
   const [draft, setDraft] = useState("");
   const [ready, setReady] = useState(false);
   const [storageMessage, setStorageMessage] = useState("Carregando rascunho local…");
@@ -76,6 +78,22 @@ export function QuadroBot() {
       <h2 className="font-display text-xl text-navy">Quadro</h2>
       <p role="status" className="mt-2 text-sm text-muted">{storageMessage}</p>
       <button type="button" disabled={!ready} onClick={exportBoard} className="mt-3 min-h-11 rounded-xl border border-line px-4 text-sm text-navy disabled:opacity-50">Exportar quadro JSON</button>
+      <label className="mt-3 block text-sm text-navy">Adicionar backup JSON ao quadro
+        <input type="file" accept=".json,application/json" disabled={!ready} className="mt-2 block w-full text-sm" onChange={async (event) => {
+          const file = event.currentTarget.files?.[0];
+          event.currentTarget.value = "";
+          if (!file) return;
+          try {
+            if (file.size > 2_000_000) throw new Error("Arquivo muito grande.");
+            const incoming = parseBoard(await file.text());
+            // Validate the entire append before making any state change.
+            const next = mergeBoards(boardRef.current, incoming);
+            setBoard(next);
+          } catch {
+            setStorageMessage("Backup inválido ou limite excedido. Suas notas atuais foram preservadas.");
+          }
+        }} />
+      </label>
       <p className="mt-1 text-sm leading-relaxed text-muted">O pedido chama uma ferramenta. O quadro muda. Os números do exemplo são fictícios.</p>
       <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(16rem,0.8fr)]">
         <div className="relative min-h-80 overflow-auto rounded-[var(--radius-card)] border border-line bg-bg" role="region" aria-label="Quadro de notas">
