@@ -61,7 +61,7 @@ export const copy = {
     more: "O resto da conta",
     payTitle: "Pagamento",
     payBody: "O exemplo da página é grátis. A frase da empresa tem dois preços, escolhidos antes: R$ 800, a palavra na hora; R$ 100, a palavra em sete dias. Achar caro no meio não muda o preço.",
-    payHow: "O pagamento profissional é um Pix com QR, confirmado na hora. Cartão não se digita aqui. Enquanto a cobrança automática não está ligada, o Pix é combinado na conversa.",
+    payHow: "Cobrança automática e confirmação de Pix ainda não estão disponíveis neste aplicativo. Nenhum pagamento é processado nesta página.",
   },
   en: {
     title: "Write the decision in one sentence.",
@@ -102,7 +102,7 @@ export const copy = {
     more: "The rest of the calculation",
     payTitle: "Payment",
     payBody: "The example on the page is free. A company's own sentence has two prices, chosen first: R$ 800, the word at once; R$ 100, the word in seven days. Finding it expensive halfway does not change the price.",
-    payHow: "The professional payment is a Pix QR code, confirmed at once. Do not type a card here. Until automatic charging is connected, Pix is agreed in the conversation.",
+    payHow: "Automatic billing and Pix confirmation are not available in this app yet. This page does not process payments.",
   },
   es: {
     title: "Escriba la decisión en una frase.",
@@ -143,6 +143,6 @@ export const copy = {
     more: "El resto de la cuenta",
     payTitle: "Pago",
     payBody: "El ejemplo de la página es gratis. La frase de la empresa tiene dos precios, elegidos antes: R$ 800, la palabra al momento; R$ 100, la palabra en siete días. Parecer caro a mitad no cambia el precio.",
-    payHow: "El pago profesional es un Pix con QR, confirmado al momento. No escriba una tarjeta aquí. Hasta que el cobro automático esté conectado, el Pix se acuerda en la conversación.",
+    payHow: "El cobro automático y la confirmación Pix aún no están disponibles en esta aplicación. Esta página no procesa pagos.",
   },
 } as const;

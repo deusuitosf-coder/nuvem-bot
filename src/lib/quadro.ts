@@ -191,7 +191,7 @@ export function plan(text: string): ToolCall[] {
     return [{ name: "criar_caixa", args: { titulo } }];
   }
   if (/nota/i.test(clean)) {
-    const texto = clean.match(/nota\s+(.+)/i)?.[1] ?? PROBLEMS[0];
+    const texto = clean.match(/nota\s*:?\s+(.+)/i)?.[1] ?? PROBLEMS[0];
     return [{ name: "criar_nota", args: { texto } }];
   }
   return [];
