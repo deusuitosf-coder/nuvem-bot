@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { firstGoal, layoutFor, type Goal, type Layout, type Visit } from "@/lib/adapt";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Interface adaptativa" }] }),
+  head: () => ({ meta: [{ title: "Nuven Bot — explore sua ideia antes de investir" }] }),
   component: AdaptPage,
 });
 
@@ -35,6 +35,13 @@ function AdaptPage() {
 
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-4 py-6 font-sans sm:px-8 sm:py-10">
+      <section aria-labelledby="nuven-intro" className="mb-10 rounded-2xl border border-line bg-surface p-6 sm:p-8">
+        <a href="/nuvem" className="inline-flex items-center gap-3 text-navy"><img src="/nuven-logo.svg" alt="" width="64" height="64" /><span className="font-display text-3xl sm:text-4xl">Nuven Bot</span></a>
+        <h1 id="nuven-intro" className="mt-6 font-display text-4xl leading-tight text-navy sm:text-5xl">Antes de investir seu dinheiro, explore sua ideia.</h1>
+        <p className="mt-5 text-lg leading-relaxed text-muted">Organize suas estratégias, compare cenários e enxergue os pontos de atenção antes de decidir.</p>
+        <a href="/nuvem" className="mt-6 inline-flex min-h-12 items-center rounded-xl bg-navy px-6 py-3 font-medium text-surface">Explorar minha ideia</a>
+        <p className="mt-4 text-sm leading-relaxed text-muted">As simulações ajudam a refletir. Não preveem o mercado nem garantem resultados.</p>
+      </section>
       <header className="flex items-center justify-between gap-3">
         <p className="text-xs font-medium tracking-[0.18em] text-sky">INTERFACE ADAPTATIVA</p>
         <p className="text-sm text-muted">{visit === "primeira" ? "Primeira visita" : "Você já voltou"}</p>
