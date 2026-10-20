@@ -23,7 +23,7 @@ function Documents() {
       catch (error) { setMessage(error instanceof Error ? error.message : "Não foi possível ler este arquivo."); }
       finally { setBusy(false); }
     }} /></label>
-    <label className="mt-6 block text-sm font-medium text-navy">Texto do documento<textarea className="mt-2 w-full rounded-xl border border-line bg-surface p-4 text-base text-ink" rows={12} maxLength={60000} value={text} onChange={e => { setText(e.target.value); setPages(Math.max(1, Math.ceil(e.target.value.length / 2000))); setResult(""); }} placeholder="Você também pode colar um texto aqui." /></label>
+    <label className="mt-6 block text-sm font-medium text-navy">Texto do documento<textarea aria-label="Texto do documento" className="mt-2 w-full rounded-xl border border-line bg-surface p-4 text-base text-ink" rows={12} maxLength={60000} value={text} onChange={e => { setText(e.target.value); setPages(Math.max(1, Math.ceil(e.target.value.length / 2000))); setResult(""); }} placeholder="Você também pode colar um texto aqui." /></label>
     <p className="mt-3 text-sm text-muted">{text.length} caracteres · {pages} página(s){text && " · Em textos colados e TXT, cada 2.000 caracteres contam como uma página estimada."}</p>
     <button disabled={busy || !text.trim() || pages > 3 || text.length > 6000} className="mt-5 min-h-12 rounded-xl bg-navy px-6 text-surface disabled:opacity-50" onClick={async () => {
       setBusy(true); setMessage(""); try {
