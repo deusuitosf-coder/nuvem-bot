@@ -54,10 +54,10 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
         <h2 className="mt-3 font-display text-3xl text-navy sm:text-4xl">Menos ideias espalhadas. Mais clareza.</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {[
-            { Icon: StickyNote, title: "Capture e organize", body: "Crie notas e caixas com comandos simples. Organize o conteúdo e consulte um resumo do que está no quadro." },
-            { Icon: GitBranch, title: "Conecte suas ideias", body: "Ligue notas e caixas em diagramas. A demonstração também inclui cenários calculados, sem prever o mercado." },
-            { Icon: FileText, title: "Guarde e leve com você", body: "O quadro salva neste navegador. Exporte um backup JSON ou acrescente um backup ao quadro sem substituir as notas atuais." },
-          ].map(({ Icon, title, body }) => <article key={title} className="border-t-2 border-sky pt-5"><Icon className="text-sky" size={28} aria-hidden="true" /><h3 className="mt-4 text-xl font-medium text-navy">{title}</h3><p className="mt-3 leading-relaxed text-muted">{body}</p></article>)}
+            { Icon: StickyNote, title: "Capture e organize", action: "Abrir notas e caixas", href: "/nuvem#quadro", body: "Crie notas e caixas com comandos simples. Organize o conteúdo e consulte um resumo do que está no quadro." },
+            { Icon: GitBranch, title: "Conecte suas ideias", action: "Abrir quadro de conexões", href: "/nuvem#quadro", body: "Ligue notas e caixas em diagramas. A demonstração também inclui cenários calculados, sem prever o mercado." },
+            { Icon: FileText, title: "Guarde e leve com você", action: "Abrir quadro e backups", href: "/nuvem#quadro", body: "O quadro salva neste navegador. Exporte um backup JSON ou acrescente um backup ao quadro sem substituir as notas atuais." },
+          ].map(({ Icon, title, body, action, href }) => <article key={title} className="border-t-2 border-sky pt-5"><Icon className="text-sky" size={28} aria-hidden="true" /><h3 className="mt-4 text-xl font-medium text-navy">{title}</h3><p className="mt-3 leading-relaxed text-muted">{body}</p><a href={href} className="mt-4 inline-flex min-h-11 items-center gap-2 font-medium text-sky underline">{action}<ArrowRight size={16} aria-hidden="true" /></a></article>)}
         </div>
         <p className="mt-8 rounded-xl bg-mist p-5 text-sm leading-relaxed text-navy">Esta é uma versão demonstrativa com comandos locais. Login, colaboração na nuvem, IA generativa e processamento automático de documentos ainda não estão disponíveis. Os seus quadros não sincronizam entre aparelhos.</p>
       </section>
