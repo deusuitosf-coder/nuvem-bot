@@ -19,11 +19,12 @@ function Account() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const [recovering, setRecovering] = useState(false);
   useEffect(() => {
     const client = cloudClient();
     let active = true;
     client.auth.getUser().then(({ data }) => { if (active) { setUser(data.user); setReady(true); } }).catch(() => { if (active) { setReady(true); setMessage("Não foi possível conferir a sessão. Tente entrar novamente."); } });
-    const { data } = client.auth.onAuthStateChange((_event, session) => { if (active) { setUser(session?.user ?? null); setReady(true); } });
+    const { data } = client.auth.onAuthStateChange((event, session) => { if (active) { setUser(session?.user ?? null); setReady(true); if (event === "PASSWORD_RECOVERY") setRecovering(true); if (event === "SIGNED_OUT") setRecovering(false); } });
     return () => { active = false; data.subscription.unsubscribe(); };
   }, []);
   const field = "mt-2 min-h-12 w-full rounded-xl border border-line bg-surface px-3 text-ink";
@@ -33,6 +34,7 @@ function Account() {
     <p className="mt-4 leading-relaxed text-muted">Os projetos da conta ficam na nuvem. Suas notas anteriores continuam no quadro local; copie um backup apenas se desejar.</p>
     {!ready ? <p role="status" className="mt-6">Conferindo sessão…</p> : user ? <>
       <div className="mt-6 flex flex-wrap items-center gap-4"><p className="text-sm text-muted">Conectado como {user.email}</p><button disabled={busy} className="min-h-11 rounded-xl border border-line px-4 text-navy" onClick={async () => { setBusy(true); const { error } = await cloudClient().auth.signOut(); setMessage(error ? "Não foi possível sair. Tente novamente." : "Sessão encerrada."); setBusy(false); }}>Sair da conta</button></div>
+      {recovering && <form className="mt-6 max-w-lg space-y-4 rounded-xl border border-line bg-surface p-5" onSubmit={async e => { e.preventDefault(); setBusy(true); const { error } = await cloudClient().auth.updateUser({ password }); setMessage(error ? "Não foi possível alterar a senha. Tente mais tarde." : "Senha alterada."); if (!error) { setPassword(""); setRecovering(false); } setBusy(false); }}><label className="block text-sm text-navy">Nova senha<input type="password" autoComplete="new-password" minLength={12} maxLength={128} required value={password} onChange={e => setPassword(e.target.value)} className={field} /></label><button disabled={busy} className="min-h-12 rounded-xl bg-navy px-5 text-surface">Salvar nova senha</button></form>}
       <CloudWorkspace key={user.id} user={user} />
       <CloudAnalysis key={"analysis-" + user.id} />
       <CloudQuotes key={"quotes-" + user.id} />
@@ -50,6 +52,7 @@ function Account() {
         {mode === "signup" && <p className="text-sm text-muted">Use uma senha exclusiva com pelo menos 12 caracteres. O cadastro depende da confirmação do seu e-mail.</p>}
         <button disabled={busy} className="min-h-12 rounded-xl bg-navy px-6 text-surface disabled:opacity-50">{busy ? "Aguarde…" : mode === "login" ? "Entrar na minha conta" : "Cadastrar e confirmar e-mail"}</button>
       </form>
+      {mode === "login" && <button type="button" disabled={busy} className="mt-4 min-h-11 text-sky underline" onClick={async () => { if (!email.trim()) { setMessage("Preencha seu e-mail para pedir a recuperação."); return; } setBusy(true); await cloudClient().auth.resetPasswordForEmail(email.trim(), { redirectTo: "https://www.nuvembot.net/conta" }); setMessage("Se houver uma conta elegível, você receberá as instruções por e-mail. Confira também o spam."); setBusy(false); }}>Esqueci minha senha</button>}
     </section>}
     {message && <p role="status" className="mt-5 rounded-xl bg-mist p-4 text-navy">{message}</p>}
   </main>;

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { chromium } from "playwright";
+import { readFileSync } from "node:fs";
 const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
 try {
   for (const width of [1280, 390]) {
@@ -61,6 +62,9 @@ try {
     await page.getByLabel("Documento PDF ou TXT", { exact: true }).setInputFiles({ name: "teste.txt", mimeType: "text/plain", buffer: Buffer.from("Um documento para organizar as etapas do projeto.") });
     await page.getByRole("status").filter({ hasText: "Texto extraído" }).waitFor();
     assert.match(await page.getByLabel("Texto do documento", { exact: true }).inputValue(), /organizar as etapas/);
+    await page.getByLabel("Documento PDF ou TXT", { exact: true }).setInputFiles({ name: "teste.pdf", mimeType: "application/pdf", buffer: Buffer.from(readFileSync(new URL("./fixtures/nuven-test.pdf.base64", import.meta.url), "utf8").trim(), "base64") });
+    await page.getByRole("status").filter({ hasText: "Texto extraído" }).waitFor();
+    assert.match(await page.getByLabel("Texto do documento", { exact: true }).inputValue(), /Nuven PDF fixture/);
     await page.getByRole("button", { name: "Solicitar análise por IA", exact: true }).click();
     await page.getByRole("status").filter({ hasText: "Nenhum teste foi consumido" }).waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);

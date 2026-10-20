@@ -18,7 +18,7 @@ function Documents() {
     <p className="mt-5 leading-relaxed text-muted">Leia o texto de um PDF ou TXT neste aparelho. A leitura do arquivo acontece no navegador. Apenas ao pedir análise por IA o texto é enviado para processamento. Evite documentos com dados pessoais sensíveis.</p>
     <p className="mt-4 rounded-xl bg-mist p-4 text-navy">Análise por IA: 1 teste gratuito por conta confirmada, com até 3 páginas e 6.000 caracteres. A IA depende de ativação pelo responsável. Falhas de configuração não consomem o teste.</p>
     <label className="mt-8 block text-sm font-medium text-navy">Documento PDF ou TXT<input aria-label="Documento PDF ou TXT" type="file" accept=".pdf,.txt,application/pdf,text/plain" disabled={busy} className="mt-3 block w-full text-sm" onChange={async e => {
-      const file = e.target.files?.[0]; e.target.value = ""; if (!file) return; setBusy(true); setResult(""); setMessage("Lendo no navegador…");
+      const file = e.target.files?.[0]; e.target.value = ""; if (!file) return; setBusy(true); setText(""); setPages(1); setResult(""); setMessage("Lendo no navegador…");
       try { const document = await readDocument(file); setText(document.text); setPages(document.pages); setMessage("Texto extraído neste aparelho. Confira o conteúdo antes de solicitar a análise."); }
       catch (error) { setMessage(error instanceof Error ? error.message : "Não foi possível ler este arquivo."); }
       finally { setBusy(false); }
