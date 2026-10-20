@@ -16,7 +16,8 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
         </a>
         <nav aria-label="Navegação principal" className="flex flex-wrap items-center gap-5 text-sm text-navy">
           <a href="#como-funciona" className="min-h-11 content-center">Como funciona</a>
-          <a href="/jornal" className="min-h-11 content-center">Tiragem</a>
+          <a href="/conta" className="min-h-11 content-center">Minha conta</a>
+          <a href="/documentos" className="min-h-11 content-center">Documentos</a>
           <a href="#orcamento" onClick={openQuote} className="min-h-11 content-center">Orçamento</a>
           <a href="/nuvem" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-navy px-5 text-surface">Abrir demonstração <ArrowRight size={16} aria-hidden="true" /></a>
         </nav>
@@ -59,7 +60,7 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
             { Icon: FileText, title: "Guarde e leve com você", action: "Abrir quadro e backups", href: "/nuvem#quadro", body: "O quadro salva neste navegador. Exporte um backup JSON ou acrescente um backup ao quadro sem substituir as notas atuais." },
           ].map(({ Icon, title, body, action, href }) => <article key={title} className="border-t-2 border-sky pt-5"><Icon className="text-sky" size={28} aria-hidden="true" /><h3 className="mt-4 text-xl font-medium text-navy">{title}</h3><p className="mt-3 leading-relaxed text-muted">{body}</p><a href={href} className="mt-4 inline-flex min-h-11 items-center gap-2 font-medium text-sky underline">{action}<ArrowRight size={16} aria-hidden="true" /></a></article>)}
         </div>
-        <p className="mt-8 rounded-xl bg-mist p-5 text-sm leading-relaxed text-navy">Esta é uma versão demonstrativa com comandos locais. Login, colaboração na nuvem, IA generativa e processamento automático de documentos ainda não estão disponíveis. Os seus quadros não sincronizam entre aparelhos.</p>
+        <p className="mt-8 rounded-xl bg-mist p-5 text-sm leading-relaxed text-navy">O quadro de demonstração salva neste navegador. Em Minha conta, crie projetos privados na nuvem e conceda acesso por e-mail. Em Documentos, extraia texto de PDF e TXT. IA e pagamentos dependem da ativação do provedor; não há cobrança automática ativa.</p>
       </section>
 
       <section id="para-quem" className="border-t border-line py-12">
@@ -71,8 +72,8 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
             ["Equipes e empresas", "Mapeie processos e visualize as prioridades de um projeto."],
             ["Professores e estudantes", "Conecte assuntos, monte resumos e planeje trabalhos."],
             ["Criadores de conteúdo", "Reúna pautas, roteiros e ideias para suas publicações."],
-            ["Documentos", "Organize a lista de documentos, o total de páginas e o escopo do seu pedido de orçamento. No lançamento: 1 teste grátis com um documento de poucas páginas. Limite de páginas a definir; processamento e controle da gratuidade ainda em preparação."],
-          ].map(([title, body]) => <article key={title} className="break-inside-avoid border-t border-line pt-4"><h3 className={`font-display text-2xl leading-snug text-sky ${title === "Criadores de conteúdo" ? "whitespace-nowrap" : ""}`}>{title}</h3><p className="mt-2 leading-relaxed text-muted">{body}</p></article>)}
+            ["Documentos", "Organize a lista de documentos, o total de páginas e o escopo do seu pedido de orçamento. Leia PDF e TXT. Para análise por IA: 1 teste grátis por conta, até 3 páginas e 6.000 caracteres, quando o provedor for ativado."],
+          ].map(([title, body]) => <article key={title} className="break-inside-avoid border-t border-line pt-4"><h3 className={`font-display text-2xl leading-snug text-sky ${title === "Criadores de conteúdo" ? "whitespace-nowrap" : ""}`}>{title}</h3><p className="mt-2 leading-relaxed text-muted">{body}</p><a href={title === "Documentos" ? "/documentos" : "/conta"} className="mt-3 inline-flex min-h-11 items-center text-sky underline">{title === "Documentos" ? "Abrir documentos" : "Abrir meus projetos"}</a></article>)}
         </div>
       </section>
       <section className="grid gap-6 border-t border-line py-12 sm:grid-cols-2" aria-label="Escolha por onde começar">

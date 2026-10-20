@@ -40,6 +40,6 @@ export function quoteText(q: ReturnType<typeof quoteDraft>) {
     `${q.customized ? "Valor inicial, a partir de" : "Estimativa para serviços simples"}: ${q.minimum.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`,
     q.customized ? "O valor final depende de volume, complexidade, prazo e entregáveis. Não há tarifa por página/documento aprovada neste formulário." : `${q.units} serviço(s) × R$ 100. Escopo e prazo ainda precisam de confirmação.`,
     "Antes da contratação, confirmar: entregáveis, exclusões, revisões, prazo, valor final, condições de pagamento e validade da proposta.",
-    "Nenhum pedido foi enviado. Guarde este rascunho. Atendimento, processamento de documentos e cobrança automática estão em preparação.",
+    "Este arquivo não envia pedidos nem confirma pagamento. Registre o pedido na sua conta para acompanhamento. Cobrança depende de aprovação do orçamento e ativação do provedor.",
   ].join("\n\n");
 }
