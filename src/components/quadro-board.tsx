@@ -65,7 +65,7 @@ export function QuadroBot() {
     const clean = plainText(value, 400);
     if (!clean) return;
     const turn = runTurn(clean, board);
-    setBoard(turn.board);
+    try { serializeBoard(turn.board); setBoard(turn.board); } catch { setStorageMessage("O quadro atingiu o limite. Exporte seu backup antes de continuar."); return; }
     setLog((current) => [...current, { who: "voce", text: clean }, { who: "bot", text: turn.said }]);
     setDraft("");
   }
@@ -75,7 +75,7 @@ export function QuadroBot() {
 
   return (
     <section id="quadro" className="mt-4 rounded-[var(--radius-card)] border border-line bg-surface p-4">
-      <h2 className="font-display text-xl text-navy">Quadro</h2>
+      <div className="flex items-center gap-3"><img src="/mascote-192.webp" width="72" height="48" alt="Nuvenzinha do Nuvem Bot" /><h2 className="font-display text-xl text-navy">Quadro</h2></div>
       <p role="status" className="mt-2 text-sm text-muted">{storageMessage}</p>
       <button type="button" disabled={!ready} onClick={exportBoard} className="mt-3 min-h-11 rounded-xl border border-line px-4 text-sm text-navy disabled:opacity-50">Exportar quadro JSON</button>
       <label className="mt-3 block text-sm text-navy">Adicionar backup JSON ao quadro

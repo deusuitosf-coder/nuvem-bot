@@ -1,0 +1,3 @@
+Abra RELATORIO.md para conferir resultados e pendências.
+O material do anúncio está na pasta anuncio.
+Esta entrega não significa que e-mail, IA, cobrança e publicação estejam todos validados em produção.

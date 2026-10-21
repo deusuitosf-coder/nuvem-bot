@@ -149,6 +149,7 @@ function authPopupPlugin(): Plugin {
 // AGENTS.md § "First scaffold".
 export default defineConfig(({ command, isPreview }) => ({
   server: {
+    allowedHosts: ["terminal.local"],
     host: "0.0.0.0",
     port: 8080,
     strictPort: true,
