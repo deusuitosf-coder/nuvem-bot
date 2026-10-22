@@ -41,3 +41,11 @@ Não declarar “tudo concluído”, “sem erros” ou “todos os ataques test
 - A verificação ampliada do navegador passou para quadro local (criar, reabrir, exportar, importar e rejeitar backup inválido), página inicial, navegação, orçamentos e projetos da conta em 1.280 e 390 px. A análise de segurança local passou para cabeçalhos HTTP, conteúdo malicioso importado como texto, bloqueio de eventos inline e bloqueio de enquadramento externo.
 - O rodapé passou a informar “Desenvolvido com apoio do ChatGPT”, conforme pedido. Isso descreve apoio no desenvolvimento e não indica endosso da OpenAI.
 - A atualização permanece na proposta nº 6 até autorização de integração na versão principal e confirmação dos checks remotos.
+
+## Documentos e arquivos maliciosos
+
+- Importação aceita PDF/TXT até 5 MB e aplica limites de páginas/texto. PDFs são usados para extração de texto, sem execução por eval. Nenhum arquivo é hospedado ou disponibilizado para download a outros usuários por esse fluxo.
+- Acrescentada conferência do cabeçalho PDF antes de carregar o parser. TXT rejeita assinaturas de executáveis/arquivos compactados, bytes nulos e UTF-8 inválido. A extensão ou o tipo declarado, isoladamente, não comprovam segurança.
+- Seis testes adicionais cobrem extensões executáveis, arquivos renomeados, PDF falso, texto binário, tamanho e preservação de marcação como texto.
+- Não há motor antivírus/sandbox instalado nem varredura de malware dos aparelhos. Não se declara detecção de todos os vírus. Não foram enviados documentos a serviços públicos de varredura.
+- Ainda precisam de validação operacional: proteção contra tráfego abusivo/DDoS, limites de login e CAPTCHA, monitoramento e restauração de backups. Não foi realizado teste de carga ou inundação no domínio público.
