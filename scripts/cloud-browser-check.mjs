@@ -13,6 +13,7 @@ try {
     const projects = [];
     const items = [];
     const members = [];
+    let denyInvite = false;
     await context.routeWebSocket("wss://vqcimzjyhpvdwsvronxw.supabase.co/**", ws => ws.close());
     await context.route("https://vqcimzjyhpvdwsvronxw.supabase.co/**", async route => {
       const request = route.request(), url = new URL(request.url());
@@ -21,18 +22,30 @@ try {
       if (url.pathname.endsWith("/token")) return reply({ access_token: token, refresh_token: "fixture-refresh", token_type: "bearer", expires_in: 3600, expires_at: Math.floor(Date.now()/1000)+3600, user });
       if (url.pathname.endsWith("/user")) return reply(user);
       if (url.pathname.endsWith("/logout")) return reply({});
+      if (url.pathname.endsWith("/recover")) return reply({ message: "Too many requests" }, 429);
+      if (url.pathname.endsWith("/resend")) return reply({});
+      if (url.pathname.endsWith("/rpc/nuven_apply_board_changes")) {
+        const { p_board_id, p_changes } = request.postDataJSON();
+        for (const change of p_changes) {
+          const index = items.findIndex(item => item.id === change.data.id);
+          const saved = { id: change.data.id, board_id: p_board_id, data: change.data, updated_at: new Date().toISOString() };
+          if (index < 0) items.push(saved); else items[index] = saved;
+        }
+        return reply(p_changes.length);
+      }
       if (url.pathname.includes("/rpc/nuven_remaining_uses")) return reply({ ideas: 2, documents: 1 });
       if (url.pathname.includes("/functions/v1/nuven-service")) return reply({ error: "A IA ainda precisa ser ativada. Nenhum teste foi consumido." }, 503);
       if (url.pathname.endsWith("/nuvem_boards")) {
         if (request.method() === "POST") { const input = request.postDataJSON(); const p = { ...input, id: "20000000-0000-4000-8000-" + String(projects.length+1).padStart(12,"0") }; projects.push(p); return reply(p, 201); }
-        return reply(projects);
+        return reply(url.searchParams.has("id") ? projects.filter(p => "eq." + p.id === url.searchParams.get("id")) : projects);
       }
       if (url.pathname.endsWith("/nuvem_items")) {
         if (request.method() === "POST") { for (const item of request.postDataJSON()) items.push({ ...item, updated_at: new Date().toISOString() }); return reply([], 201); }
         return reply(items.filter(item => "eq." + item.board_id === url.searchParams.get("board_id")));
       }
       if (url.pathname.endsWith("/nuvem_access")) {
-        if (request.method() === "POST") { members.push(request.postDataJSON()); return reply([], 201); }
+        if (request.method() === "POST") { if (denyInvite) { denyInvite = false; return reply({ message: "Network unavailable" }, 503); } members.push(request.postDataJSON()); return reply([], 201); }
+        if (request.method() === "DELETE") { const index = members.findIndex(m => "eq." + m.email === url.searchParams.get("email")); if (index >= 0) members.splice(index, 1); return reply([]); }
         return reply(members);
       }
       if (url.pathname.endsWith("/nuven_quote_requests")) return reply([]);
@@ -41,6 +54,11 @@ try {
     // Fixtures exercise UI behavior only; separate real SQL tests cover RLS.
     await page.goto("http://127.0.0.1:8081/conta", { waitUntil: "networkidle" });
     await page.getByLabel("E-mail", { exact: true }).fill(user.email);
+    await page.getByRole("button", { name: "Esqueci minha senha", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Não foi possível enviar o pedido" }).waitFor();
+    assert.equal(await page.getByRole("button", { name: "Esqueci minha senha", exact: true }).isEnabled(), true);
+    await page.getByRole("button", { name: "Reenviar confirmação de e-mail", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Se o cadastro precisar de confirmação" }).waitFor();
     await page.getByLabel("Senha", { exact: true }).fill("Fixture-password-123");
     await page.getByRole("button", { name: "Entrar na minha conta", exact: true }).click();
     await page.getByLabel("Nome do novo projeto", { exact: true }).fill("Projeto A");
@@ -54,8 +72,16 @@ try {
     await page.getByRole("heading", { name: "Projeto B", exact: true }).waitFor();
     assert.equal(await page.getByRole("region", { name: "Conteúdo do projeto" }).getByText("Apenas no projeto A", { exact: true }).count(), 0);
     await page.getByLabel("E-mail para compartilhar", { exact: true }).fill("member@example.invalid");
+    denyInvite = true;
+    await page.getByRole("button", { name: "Conceder acesso", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Não foi possível conceder acesso" }).waitFor();
+    assert.equal(await page.getByRole("button", { name: "Conceder acesso", exact: true }).isEnabled(), true);
     await page.getByRole("button", { name: "Conceder acesso", exact: true }).click();
     await page.getByText("member@example.invalid", { exact: true }).waitFor();
+    assert.equal(members[0].role, "reader");
+    await page.getByRole("button", { name: "Retirar acesso", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Acesso retirado" }).waitFor();
+    assert.equal(members.length, 0);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
     await page.screenshot({ path: "/workspace/screenshots/cloud-" + width + ".png", fullPage: true, caret: "initial" });
     await page.goto("http://127.0.0.1:8081/documentos", { waitUntil: "networkidle" });

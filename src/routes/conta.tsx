@@ -38,7 +38,7 @@ function Account() {
         setMessage(error ? "Não foi possível sair. Tente novamente." : "Sessão encerrada.");
       } catch { setMessage("Não foi possível sair. Tente novamente."); }
       finally { setBusy(false); } }}>Sair da conta</button></div>
-      {recovering && <form className="mt-6 max-w-lg space-y-4 rounded-xl border border-line bg-surface p-5" onSubmit={async e => { e.preventDefault(); setBusy(true); const { error } = await cloudClient().auth.updateUser({ password }); setMessage(error ? "Não foi possível alterar a senha. Tente mais tarde." : "Senha alterada."); if (!error) { setPassword(""); setRecovering(false); } setBusy(false); }}><label className="block text-sm text-navy">Nova senha<input type="password" autoComplete="new-password" minLength={12} maxLength={128} required value={password} onChange={e => setPassword(e.target.value)} className={field} /></label><button disabled={busy} className="min-h-12 rounded-xl bg-navy px-5 text-surface">Salvar nova senha</button></form>}
+      {recovering && <form className="mt-6 max-w-lg space-y-4 rounded-xl border border-line bg-surface p-5" onSubmit={async e => { e.preventDefault(); setBusy(true); try { const { error } = await cloudClient().auth.updateUser({ password }); if (error) throw error; setMessage("Senha alterada."); setPassword(""); setRecovering(false); } catch { setMessage("Não foi possível alterar a senha. Tente novamente."); } finally { setBusy(false); } }}><label className="block text-sm text-navy">Nova senha<input type="password" autoComplete="new-password" minLength={12} maxLength={128} required value={password} onChange={e => setPassword(e.target.value)} className={field} /></label><button disabled={busy} className="min-h-12 rounded-xl bg-navy px-5 text-surface">Salvar nova senha</button></form>}
       <CloudWorkspace key={user.id} user={user} />
       <CloudAnalysis key={"analysis-" + user.id} />
       <CloudQuotes key={"quotes-" + user.id} />
@@ -56,8 +56,10 @@ function Account() {
         {mode === "signup" && <p className="text-sm text-muted">Use uma senha exclusiva com pelo menos 12 caracteres. O cadastro depende da confirmação do seu e-mail.</p>}
         <button disabled={busy} className="min-h-12 rounded-xl bg-navy px-6 text-surface disabled:opacity-50">{busy ? "Aguarde…" : mode === "login" ? "Entrar na minha conta" : "Cadastrar e confirmar e-mail"}</button>
       </form>
+      <button type="button" disabled={busy} className="mt-4 block min-h-11 text-sky underline" onClick={async () => { if (!email.trim()) { setMessage("Preencha seu e-mail para reenviar a confirmação."); return; } setBusy(true); try { const { error } = await cloudClient().auth.resend({ type: "signup", email: email.trim(), options: { emailRedirectTo: "https://www.nuvembot.net/conta" } }); if (error) throw error; setMessage("Se o cadastro precisar de confirmação, confira seu e-mail e o spam."); } catch { setMessage("Não foi possível reenviar agora. Aguarde e tente novamente."); } finally { setBusy(false); } }}>Reenviar confirmação de e-mail</button>
       {mode === "login" && <button type="button" disabled={busy} className="mt-4 min-h-11 text-sky underline" onClick={async () => { if (!email.trim()) { setMessage("Preencha seu e-mail para pedir a recuperação."); return; } setBusy(true); try {
-        await cloudClient().auth.resetPasswordForEmail(email.trim(), { redirectTo: "https://www.nuvembot.net/conta" });
+        const { error } = await cloudClient().auth.resetPasswordForEmail(email.trim(), { redirectTo: "https://www.nuvembot.net/conta" });
+        if (error) throw error;
         setMessage("Se houver uma conta elegível, você receberá as instruções por e-mail. Confira também o spam.");
       } catch { setMessage("Não foi possível enviar o pedido agora. Tente novamente mais tarde."); }
       finally { setBusy(false); } }}>Esqueci minha senha</button>}
