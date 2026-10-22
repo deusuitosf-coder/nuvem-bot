@@ -33,3 +33,11 @@ Base preservada: commit 609d9dd do repositório atual. O ZIP antigo não foi usa
 6. Publicação: confirmar que o pipeline instalou esta revisão no domínio público. Código salvo no GitHub não é prova de implantação.
 
 Não declarar “tudo concluído”, “sem erros” ou “todos os ataques testados”. O auditor do banco ainda informa uma tabela privada de limites sem políticas; RLS permanece ligado. Não se trata de certificação de segurança.
+
+## Segunda conferência — segurança das dependências e crédito público
+
+- O CI revelou alerta alto no Vite 8.3.1. A dependência foi fixada em 8.3.3, com lockfile atualizado. `npm audit --omit=dev --audit-level=high` passou e informou zero vulnerabilidades nessa consulta. Isso não é garantia de ausência de falhas.
+- Os 298 testes, TypeScript e compilação passaram novamente após essa atualização.
+- A verificação ampliada do navegador passou para quadro local (criar, reabrir, exportar, importar e rejeitar backup inválido), página inicial, navegação, orçamentos e projetos da conta em 1.280 e 390 px. A análise de segurança local passou para cabeçalhos HTTP, conteúdo malicioso importado como texto, bloqueio de eventos inline e bloqueio de enquadramento externo.
+- O rodapé passou a informar “Desenvolvido com apoio do ChatGPT”, conforme pedido. Isso descreve apoio no desenvolvimento e não indica endosso da OpenAI.
+- A atualização permanece na proposta nº 6 até autorização de integração na versão principal e confirmação dos checks remotos.

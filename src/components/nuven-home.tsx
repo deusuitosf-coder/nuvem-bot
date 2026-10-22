@@ -85,7 +85,7 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
         <QuoteBuilder />
       </details>
       {children}
-      <footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-line py-6 text-sm text-muted"><p>Nuven Bot · Ideias com espaço para crescer.</p><a href="/nuvem" className="min-h-11 content-center text-navy">Acessar demonstração →</a></footer>
+      <footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-line py-6 text-sm text-muted"><div><p>Nuven Bot · Ideias com espaço para crescer.</p><p className="mt-2">Desenvolvido com apoio do ChatGPT.</p></div><a href="/nuvem" className="min-h-11 content-center text-navy">Acessar demonstração →</a></footer>
     </main>
   );
 }
