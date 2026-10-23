@@ -29,7 +29,7 @@ Deno.serve(async req => {
       if (!["idea", "document"].includes(input.kind) || typeof input.text !== "string" || !input.text.trim() || input.text.length > 6000) return reply({ error: "Envie um texto de 1 a 6.000 caracteres." }, 400);
       if (input.kind === "document" && (!Number.isInteger(input.pages) || input.pages < 1 || input.pages > 3)) return reply({ error: "O teste gratuito aceita até 3 páginas e 6.000 caracteres." }, 400);
       const reserved = await client.rpc("nuven_reserve_operation", { p_kind: input.kind });
-      if (reserved.error) return reply({ error: "Os testes gratuitos terminaram ou a conta não está confirmada. Consulte seu orçamento." }, 402);
+      if (reserved.error) return reply({ error: "Limite de uso atingido ou conta não confirmada. Aguarde e consulte o responsável se o problema continuar." }, 402);
       operation = reserved.data;
       const response = await fetch(provider.url, {
         method: "POST", headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
