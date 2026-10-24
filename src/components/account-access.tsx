@@ -46,7 +46,7 @@ export function AccountAccess({ embedded = false }: { embedded?: boolean }) {
       <CloudAnalysis key={"analysis-" + user.id} />
       <CloudQuotes key={"quotes-" + user.id} />
     </> : <section className="mt-8 max-w-lg rounded-2xl border border-line bg-surface p-6">
-      <div className="flex gap-3"><button className="min-h-11 px-3 text-navy underline" aria-pressed={mode === "login"} onClick={() => { setMode("login"); setMessage(""); }}>Entrar</button><button className="min-h-11 px-3 text-navy underline" aria-pressed={mode === "signup"} onClick={() => { setMode("signup"); setMessage(""); }}>Criar conta</button></div>
+      <div className="flex gap-3"><button id="entrar" className="min-h-11 px-3 text-navy underline" aria-pressed={mode === "login"} onClick={() => { setMode("login"); setMessage(""); }}>Entrar</button><button id="criar-conta" className="min-h-11 px-3 text-navy underline" aria-pressed={mode === "signup"} onClick={() => { setMode("signup"); setMessage(""); }}>Criar conta</button></div>
       <form className="mt-4 space-y-5" onSubmit={async e => { e.preventDefault(); setBusy(true); setMessage(""); try {
         const client = cloudClient();
         const result = mode === "login" ? await client.auth.signInWithPassword({ email: email.trim(), password }) : await client.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: "https://www.nuvembot.net/conta" } });
@@ -56,7 +56,7 @@ export function AccountAccess({ embedded = false }: { embedded?: boolean }) {
       } catch { setMessage(mode === "login" ? "Não foi possível entrar. Confira o e-mail, a senha e a confirmação do cadastro." : "Não foi possível cadastrar agora. Confira os dados ou tente mais tarde."); } finally { setBusy(false); } }}>
         <label className="block text-sm text-navy">E-mail<input className={field} type="email" autoComplete="email" maxLength={254} required value={email} onChange={e => setEmail(e.target.value)} /></label>
         <label className="block text-sm text-navy">Senha<input className={field} type="password" autoComplete={mode === "signup" ? "new-password" : "current-password"} minLength={mode === "signup" ? 12 : 1} maxLength={128} required value={password} onChange={e => setPassword(e.target.value)} /></label>
-        {mode === "signup" && <p className="text-sm text-muted">Use uma senha exclusiva com pelo menos 12 caracteres. O cadastro depende da confirmação do seu e-mail.</p>}
+        {mode === "signup" && <p className="text-sm text-muted">Use uma senha exclusiva com pelo menos 12 caracteres. O cadastro depende da confirmação do seu e-mail. Consulte os <a className="text-sky underline" href="/termos">termos de uso</a> e a <a className="text-sky underline" href="/privacidade">privacidade</a> antes de cadastrar.</p>}
         <button disabled={busy} className="min-h-12 rounded-xl bg-navy px-6 text-surface disabled:opacity-50">{busy ? "Aguarde…" : mode === "login" ? "Entrar na minha conta" : "Cadastrar e confirmar e-mail"}</button>
       </form>
       <button type="button" disabled={busy} className="mt-4 block min-h-11 text-sky underline" onClick={async () => { if (!email.trim()) { setMessage("Preencha seu e-mail para reenviar a confirmação."); return; } setBusy(true); try { const { error } = await cloudClient().auth.resend({ type: "signup", email: email.trim(), options: { emailRedirectTo: "https://www.nuvembot.net/conta" } }); if (error) throw error; setMessage("Se o cadastro precisar de confirmação, confira seu e-mail e o spam."); } catch { setMessage("Não foi possível reenviar agora. Aguarde e tente novamente."); } finally { setBusy(false); } }}>Reenviar confirmação de e-mail</button>
@@ -70,3 +70,4 @@ export function AccountAccess({ embedded = false }: { embedded?: boolean }) {
     {message && <p role="status" className="mt-5 rounded-xl bg-mist p-4 text-navy">{message}</p>}
   </section>;
 }
+

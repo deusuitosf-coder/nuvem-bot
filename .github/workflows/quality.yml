@@ -42,6 +42,7 @@ jobs:
           node scripts/security-browser-check.mjs
           node scripts/landing-browser-check.mjs
           node scripts/cloud-browser-check.mjs
+          node scripts/public-review-check.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

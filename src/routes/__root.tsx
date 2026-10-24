@@ -2,6 +2,7 @@ import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-r
 import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import appCss from "../styles.css?url";
+import { InformationLinks } from "@/components/site-information";
 
 const APP_NAME = "Nuven Bot";
 
@@ -35,6 +36,7 @@ export const Route = createRootRoute({
         <PreviewHostBridge />
         <AuthProvider>
           <Outlet />
+          <InformationLinks />
         </AuthProvider>
         <Scripts />
       </body>

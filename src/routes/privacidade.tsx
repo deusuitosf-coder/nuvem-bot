@@ -1,0 +1,15 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { InformationPage } from "@/components/site-information";
+
+export const Route = createFileRoute("/privacidade")({ head: () => ({ meta: [{ title: "Privacidade — Nuven Bot" }] }), component: Privacy });
+function Privacy() {
+  return <InformationPage title="Privacidade e seus dados">
+    <p>Esta página descreve o funcionamento atual do Nuven Bot. Atualização: 24 de outubro de 2026.</p>
+    <section><h2 className="text-xl font-medium text-navy">Conta e projetos na nuvem</h2><p className="mt-2">O Supabase processa a autenticação e armazena os projetos da conta. O aplicativo utiliza seu e-mail, identificador de conta, conteúdo dos projetos e permissões de compartilhamento para permitir o acesso. As senhas são tratadas pelo serviço de autenticação e não são exibidas no aplicativo.</p></section>
+    <section><h2 className="text-xl font-medium text-navy">Dados neste aparelho</h2><p className="mt-2">O quadro de demonstração fica no armazenamento deste navegador. A sessão da conta também é mantida no navegador para permitir seu retorno. Limpar os dados do navegador pode apagar o quadro local e encerrar a sessão. Exporte as notas que deseja guardar e use Sair em aparelhos compartilhados.</p></section>
+    <section><h2 className="text-xl font-medium text-navy">Documentos e inteligência artificial</h2><p className="mt-2">A extração de texto de PDF e TXT acontece no navegador. Ao solicitar uma análise, o texto informado é enviado ao servidor do Nuven Bot e ao provedor de IA configurado, que pode ser DeepSeek ou OpenAI. Os provedores aplicam suas próprias políticas de tratamento e retenção. Não envie dados sensíveis ou conteúdo de terceiros sem autorização.</p></section>
+    <section><h2 className="text-xl font-medium text-navy">Compartilhamento e serviços externos</h2><p className="mt-2">Pessoas autorizadas pelo dono do projeto podem visualizar ou editar seu conteúdo conforme a permissão concedida. A Vercel fornece a hospedagem; serviços de infraestrutura podem manter registros técnicos de acesso e falhas. O envio de e-mails depende do provedor configurado. Quando disponível, o pagamento é processado pela Stripe; o formulário de cartão não é fornecido pelo Nuven Bot.</p></section>
+    <section><h2 className="text-xl font-medium text-navy">Recursos da página</h2><p className="mt-2">O navegador carrega fontes do Google e recursos do ambiente que originou o site. Essas solicitações podem transmitir dados técnicos, como endereço IP e informações do navegador, aos respectivos fornecedores.</p></section>
+    <section><h2 className="text-xl font-medium text-navy">Solicitações sobre seus dados</h2><p className="mt-2">Para esclarecer o tratamento de dados ou solicitar acesso, correção ou exclusão, utilize <a className="break-all text-sky underline" href="mailto:contato@nuvembot.net">contato@nuvembot.net</a>. A solicitação será verificada antes de qualquer alteração. Cópias exportadas por você ou por pessoas com acesso ao projeto não são removidas automaticamente quando o compartilhamento é retirado.</p></section>
+  </InformationPage>;
+}

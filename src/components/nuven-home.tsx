@@ -39,7 +39,7 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
             <a href="#como-funciona" className="inline-flex min-h-12 items-center rounded-xl border border-line bg-surface px-6 py-3 text-navy">Ver o que já funciona</a>
           </div>
           <p className="mt-4 text-sm text-muted">As simulações ajudam a refletir. Não preveem o mercado nem garantem resultados.</p>
-          <p className="mt-4 text-lg font-medium text-sky">No lançamento: experimente 2 vezes grátis.</p><p className="mt-2 text-sm text-muted">Oferta em preparação. A demonstração atual não aplica limite de usos nem realiza cobrança.</p>
+          <p className="mt-4 text-lg font-medium text-sky">Demonstração aberta para explorar.</p><p className="mt-2 text-sm text-muted">Na conta confirmada, a análise por IA oferece até 2 testes de ideias e 1 de documento, sujeitos à ativação do provedor e aos limites do serviço. Um rascunho de orçamento não gera cobrança.</p>
         </div>
         <div className="rounded-3xl border border-line bg-mist p-5 sm:p-8" aria-label="Exemplo ilustrativo de organização de um projeto">
           <div className="flex items-center justify-between border-b border-line pb-4"><p className="font-medium text-navy">Meu próximo projeto</p><span className="rounded-full bg-surface px-3 py-1 text-xs text-navy">Exemplo visual</span></div>
@@ -79,7 +79,7 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
             ["Professores e estudantes", "Conecte assuntos, monte resumos e planeje trabalhos."],
             ["Criadores de conteúdo", "Reúna pautas, roteiros e ideias para suas publicações."],
             ["Documentos", "Organize a lista de documentos, o total de páginas e o escopo do seu pedido de orçamento. Leia PDF e TXT. Para análise por IA: 1 teste grátis por conta, até 3 páginas e 6.000 caracteres, quando o provedor for ativado."],
-          ].map(([title, body]) => <article key={title} className="break-inside-avoid border-t border-line pt-4"><h3 className={`font-display text-2xl leading-snug text-sky ${title === "Criadores de conteúdo" ? "whitespace-nowrap" : ""}`}>{title}</h3><p className="mt-2 leading-relaxed text-muted">{body}</p><a href={title === "Documentos" ? "/documentos" : "/conta"} className="mt-3 inline-flex min-h-11 items-center text-sky underline">{title === "Documentos" ? "Abrir documentos" : "Abrir meus projetos"}</a></article>)}
+          ].map(([title, body]) => <article key={title} className="min-w-0 break-inside-avoid border-t border-line pt-4"><h3 className="font-display text-2xl leading-snug text-sky">{title}</h3><p className="mt-2 leading-relaxed text-muted">{body}</p><a href={title === "Documentos" ? "/documentos" : "/conta"} className="mt-3 inline-flex min-h-11 items-center text-sky underline">{title === "Documentos" ? "Abrir documentos" : "Abrir meus projetos"}</a></article>)}
         </div>
       </section>
       <section className="grid gap-6 border-t border-line py-12 sm:grid-cols-2" aria-label="Escolha por onde começar">

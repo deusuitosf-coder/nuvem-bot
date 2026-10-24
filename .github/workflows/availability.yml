@@ -16,20 +16,31 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
-          import concurrent.futures, sys, urllib.request
+          import concurrent.futures, os, sys, time, urllib.request
           origin = 'https://www.nuvembot.net'
           def check(path):
-              try:
-                  req = urllib.request.Request(origin + path, headers={'User-Agent': 'NuvenBot-Availability/1.0'})
-                  with urllib.request.urlopen(req, timeout=25) as response:
-                      content = response.read(200000).decode('utf-8', errors='replace')
-                      ok = response.status == 200 and 'text/html' in response.headers.get('Content-Type', '') and 'nuven bot' in content.lower()
-                      return path, ok, str(response.status)
-              except Exception as error:
-                  return path, False, type(error).__name__
+              for attempt in range(2):
+                  try:
+                      req = urllib.request.Request(origin + path, headers={'User-Agent': 'NuvenBot-Availability/1.0'})
+                      with urllib.request.urlopen(req, timeout=20) as response:
+                          content = response.read(200000).decode('utf-8', errors='replace')
+                          ok = response.status == 200 and 'text/html' in response.headers.get('Content-Type', '') and 'nuven bot' in content.lower()
+                          detail = str(response.status)
+                  except Exception as error:
+                      ok, detail = False, type(error).__name__
+                  if ok:
+                      return path, True, detail
+                  if attempt == 0:
+                      time.sleep(2)
+              return path, False, detail
           with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
-              results = list(pool.map(check, ['/', '/conta', '/documentos', '/nuvem']))
+              results = list(pool.map(check, ['/', '/conta', '/documentos', '/nuvem', '/contato', '/termos', '/privacidade']))
           for path, ok, detail in results:
               print(('OK' if ok else 'FAIL') + ' ' + path + ' ' + detail)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
+              summary.write('## Disponibilidade do Nuvem Bot\n\n| Página | Resultado | HTTP/erro |\n|---|---|---|\n')
+              for path, ok, detail in results:
+                  summary.write(f"| {path} | {'OK' if ok else 'FALHOU'} | {detail} |\n")
+              summary.write('\nFalhas encerram esta execução com erro. Para receber avisos, ative as notificações de Actions no GitHub. A agenda pode sofrer atrasos; este teste não comprova login, SMTP, pagamentos ou recuperação de backup.\n')
           sys.exit(0 if all(ok for _, ok, _ in results) else 1)
           PY

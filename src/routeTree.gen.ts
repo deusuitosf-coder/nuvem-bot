@@ -12,12 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApresentacaoRouteImport } from './routes/apresentacao'
 import { Route as ContaRouteImport } from './routes/conta'
+import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as JornalRouteImport } from './routes/jornal'
 import { Route as MedicaoRouteImport } from './routes/medicao'
 import { Route as NuvemRouteImport } from './routes/nuvem'
 import { Route as OrcamentoRouteImport } from './routes/orcamento'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as SimuladorRouteImport } from './routes/simulador'
+import { Route as TermosRouteImport } from './routes/termos'
 import { Route as VersoesRouteImport } from './routes/versoes'
 
 const IndexRoute = IndexRouteImport.update({
@@ -33,6 +36,11 @@ const ApresentacaoRoute = ApresentacaoRouteImport.update({
 const ContaRoute = ContaRouteImport.update({
   id: '/conta',
   path: '/conta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DocumentosRoute = DocumentosRouteImport.update({
@@ -60,9 +68,19 @@ const OrcamentoRoute = OrcamentoRouteImport.update({
   path: '/orcamento',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SimuladorRoute = SimuladorRouteImport.update({
   id: '/simulador',
   path: '/simulador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VersoesRoute = VersoesRouteImport.update({
@@ -75,24 +93,30 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apresentacao': typeof ApresentacaoRoute
   '/conta': typeof ContaRoute
+  '/contato': typeof ContatoRoute
   '/documentos': typeof DocumentosRoute
   '/jornal': typeof JornalRoute
   '/medicao': typeof MedicaoRoute
   '/nuvem': typeof NuvemRoute
   '/orcamento': typeof OrcamentoRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/simulador': typeof SimuladorRoute
+  '/termos': typeof TermosRoute
   '/versoes': typeof VersoesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apresentacao': typeof ApresentacaoRoute
   '/conta': typeof ContaRoute
+  '/contato': typeof ContatoRoute
   '/documentos': typeof DocumentosRoute
   '/jornal': typeof JornalRoute
   '/medicao': typeof MedicaoRoute
   '/nuvem': typeof NuvemRoute
   '/orcamento': typeof OrcamentoRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/simulador': typeof SimuladorRoute
+  '/termos': typeof TermosRoute
   '/versoes': typeof VersoesRoute
 }
 export interface FileRoutesById {
@@ -100,12 +124,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/apresentacao': typeof ApresentacaoRoute
   '/conta': typeof ContaRoute
+  '/contato': typeof ContatoRoute
   '/documentos': typeof DocumentosRoute
   '/jornal': typeof JornalRoute
   '/medicao': typeof MedicaoRoute
   '/nuvem': typeof NuvemRoute
   '/orcamento': typeof OrcamentoRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/simulador': typeof SimuladorRoute
+  '/termos': typeof TermosRoute
   '/versoes': typeof VersoesRoute
 }
 export interface FileRouteTypes {
@@ -114,36 +141,45 @@ export interface FileRouteTypes {
     | '/'
     | '/apresentacao'
     | '/conta'
+    | '/contato'
     | '/documentos'
     | '/jornal'
     | '/medicao'
     | '/nuvem'
     | '/orcamento'
+    | '/privacidade'
     | '/simulador'
+    | '/termos'
     | '/versoes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/apresentacao'
     | '/conta'
+    | '/contato'
     | '/documentos'
     | '/jornal'
     | '/medicao'
     | '/nuvem'
     | '/orcamento'
+    | '/privacidade'
     | '/simulador'
+    | '/termos'
     | '/versoes'
   id:
     | '__root__'
     | '/'
     | '/apresentacao'
     | '/conta'
+    | '/contato'
     | '/documentos'
     | '/jornal'
     | '/medicao'
     | '/nuvem'
     | '/orcamento'
+    | '/privacidade'
     | '/simulador'
+    | '/termos'
     | '/versoes'
   fileRoutesById: FileRoutesById
 }
@@ -151,12 +187,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApresentacaoRoute: typeof ApresentacaoRoute
   ContaRoute: typeof ContaRoute
+  ContatoRoute: typeof ContatoRoute
   DocumentosRoute: typeof DocumentosRoute
   JornalRoute: typeof JornalRoute
   MedicaoRoute: typeof MedicaoRoute
   NuvemRoute: typeof NuvemRoute
   OrcamentoRoute: typeof OrcamentoRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
   SimuladorRoute: typeof SimuladorRoute
+  TermosRoute: typeof TermosRoute
   VersoesRoute: typeof VersoesRoute
 }
 
@@ -181,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/conta'
       fullPath: '/conta'
       preLoaderRoute: typeof ContaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/documentos': {
@@ -218,11 +264,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrcamentoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/simulador': {
       id: '/simulador'
       path: '/simulador'
       fullPath: '/simulador'
       preLoaderRoute: typeof SimuladorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/versoes': {
@@ -239,12 +299,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApresentacaoRoute: ApresentacaoRoute,
   ContaRoute: ContaRoute,
+  ContatoRoute: ContatoRoute,
   DocumentosRoute: DocumentosRoute,
   JornalRoute: JornalRoute,
   MedicaoRoute: MedicaoRoute,
   NuvemRoute: NuvemRoute,
   OrcamentoRoute: OrcamentoRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
   SimuladorRoute: SimuladorRoute,
+  TermosRoute: TermosRoute,
   VersoesRoute: VersoesRoute,
 }
 export const routeTree = rootRouteImport
