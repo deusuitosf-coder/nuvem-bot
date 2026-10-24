@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { AccountAccess } from "@/components/account-access";
 import { QuoteBuilder } from "@/components/quote-builder";
 import { ArrowRight, FileText, GitBranch, StickyNote } from "lucide-react";
 
@@ -16,12 +17,17 @@ export function NuvenHome({ children }: { children?: ReactNode }) {
         </a>
         <nav aria-label="Navegação principal" className="flex flex-wrap items-center gap-5 text-sm text-navy">
           <a href="#como-funciona" className="min-h-11 content-center">Como funciona</a>
-          <a href="/conta" className="min-h-11 content-center">Minha conta</a>
+          <div className="flex items-center gap-3" aria-label="Acesso à conta">
+            <a href="#entrar" className="inline-flex min-h-11 items-center rounded-xl border border-line bg-surface px-4 font-medium text-navy">Entrar</a>
+            <a href="#criar-conta" className="inline-flex min-h-11 items-center rounded-xl bg-navy px-4 font-medium text-surface">Criar conta</a>
+          </div>
           <a href="/documentos" className="min-h-11 content-center">Documentos</a>
           <a href="#orcamento" onClick={openQuote} className="min-h-11 content-center">Orçamento</a>
           <a href="/nuvem" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-navy px-5 text-surface">Abrir demonstração <ArrowRight size={16} aria-hidden="true" /></a>
         </nav>
       </header>
+
+      <AccountAccess embedded />
 
       <section className="grid items-center gap-10 py-12 sm:py-20 lg:grid-cols-2">
         <div className="rise">
