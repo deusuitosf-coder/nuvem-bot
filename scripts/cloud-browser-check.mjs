@@ -48,7 +48,19 @@ try {
         if (request.method() === "DELETE") { const index = members.findIndex(m => "eq." + m.email === url.searchParams.get("email")); if (index >= 0) members.splice(index, 1); return reply([]); }
         return reply(members);
       }
-      if (url.pathname.endsWith("/nuven_quote_requests")) return reply([]);
+      if (url.pathname.endsWith("/nuven_quote_requests") && request.method() === "POST") {
+        const quote = request.postDataJSON();
+        assert.match(quote.scope, /Data desejada \(a confirmar\): 2026-12-10/);
+        assert.match(quote.scope, /Registrar não contrata/);
+        assert.ok(quote.scope.length <= 1500);
+        return reply({ id: "30000000-0000-4000-8000-000000000005" }, 201);
+      }
+      if (url.pathname.endsWith("/nuven_quote_requests")) return reply([
+        { id: "30000000-0000-4000-8000-000000000001", scope: "Pedido aguardando análise", service: "simples", complexity: "padrao", state: "received", units: 1 },
+        { id: "30000000-0000-4000-8000-000000000002", scope: "Pedido simples aprovado", service: "simples", complexity: "padrao", state: "approved", units: 1 },
+        { id: "30000000-0000-4000-8000-000000000003", scope: "Projeto personalizado aprovado", service: "documentos", complexity: "complexo", state: "approved", units: 1 },
+        { id: "30000000-0000-4000-8000-000000000004", scope: "Pedido já pago", service: "simples", complexity: "padrao", state: "paid", units: 1 },
+      ]);
       throw new Error("Unmocked cloud route: " + request.method() + " " + url.pathname);
     });
     // Fixtures exercise UI behavior only; separate real SQL tests cover RLS.
@@ -62,6 +74,11 @@ try {
     await page.getByLabel("Senha", { exact: true }).fill("Fixture-password-123");
     await page.getByRole("button", { name: "Entrar na minha conta", exact: true }).click();
     await page.getByLabel("Nome do novo projeto", { exact: true }).fill("Projeto A");
+    await page.getByText("Pedido simples aprovado", { exact: true }).waitFor();
+    assert.equal(await page.getByRole("button", { name: "Consultar pagamento seguro", exact: true }).count(), 1, "only the approved standard order can offer checkout");
+    assert.equal(await page.getByText("Pagamento confirmado", { exact: true }).count(), 1);
+    await page.getByText(/Este pedido ainda não está liberado para pagamento/).waitFor();
+    await page.getByText(/Serviço personalizado: confirme o valor final/).waitFor();
     await page.getByRole("button", { name: "Criar projeto", exact: true }).click();
     await page.getByRole("heading", { name: "Projeto A", exact: true }).waitFor();
     await page.getByLabel("Comando para este projeto", { exact: true }).fill("Crie uma nota: Apenas no projeto A");
@@ -95,6 +112,14 @@ try {
     await page.getByRole("status").filter({ hasText: "Nenhum teste foi consumido" }).waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
     await page.screenshot({ path: "/workspace/screenshots/documents-" + width + ".png", fullPage: true, caret: "initial" });
+    await page.goto("http://127.0.0.1:8081/conta", { waitUntil: "networkidle" });
+    await page.goto("http://127.0.0.1:8081/#orcamento", { waitUntil: "networkidle" });
+    await page.getByText("Fazer orçamento", { exact: true }).click();
+    await page.getByLabel("Data desejada (a confirmar)", { exact: true }).fill("2026-12-10");
+    await page.getByLabel("O que você precisa receber?", { exact: true }).fill("Organizar uma ideia e confirmar o escopo antes de contratar.");
+    await page.getByRole("button", { name: "Gerar rascunho de orçamento", exact: true }).click();
+    await page.getByRole("button", { name: "Registrar pedido na minha conta", exact: true }).click();
+    await page.getByRole("status").filter({ hasText: "Pedido registrado na sua conta" }).waitFor();
     await page.goto("http://127.0.0.1:8081/conta", { waitUntil: "networkidle" });
     await page.getByRole("button", { name: "Sair da conta", exact: true }).click();
     await page.getByRole("button", { name: "Entrar na minha conta", exact: true }).waitFor();

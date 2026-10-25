@@ -11,8 +11,11 @@ export type QuoteInput = {
 
 export function quoteDraft(input: QuoteInput) {
   const company = input.company.trim().slice(0, 120);
-  const description = input.description.trim().slice(0, 1500);
+  const description = input.description.trim();
   if (!description) throw new Error("Descreva o que você precisa receber.");
+  if (description.length > 1200) throw new Error("Descreva o pedido em até 1.200 caracteres para registrar todas as informações sem cortes.");
+  const deadline = input.deadline.trim();
+  if (deadline && (!/^\d{4}-\d{2}-\d{2}$/.test(deadline) || Number.isNaN(Date.parse(deadline)) || new Date(deadline).toISOString().slice(0, 10) !== deadline)) throw new Error("Informe uma data desejada válida.");
   if (!["simples", "documentos", "empresa"].includes(input.service)) throw new Error("Escolha um serviço válido.");
   if (!["padrao", "complexo"].includes(input.complexity)) throw new Error("Escolha a complexidade.");
   for (const value of [input.units, input.documents, input.pages]) {
@@ -23,7 +26,14 @@ export function quoteDraft(input: QuoteInput) {
   const customized = input.service !== "simples" || input.complexity === "complexo";
   const minimum = customized ? 800 : input.units * 100;
   const label = input.service === "documentos" ? "Projeto documental" : input.service === "empresa" ? "Projeto empresarial" : "Serviço simples";
-  return { ...input, company, description, deadline: input.deadline.slice(0, 10), label, minimum, customized };
+  return { ...input, company, description, deadline, label, minimum, customized };
+}
+
+export function quoteRegistrationScope(q: ReturnType<typeof quoteDraft>) {
+  const price = q.minimum.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  const scope = [q.description, `Data desejada (a confirmar): ${q.deadline || "A combinar"}.`, `${q.customized ? "Estimativa inicial, a partir de" : "Estimativa para serviços simples"}: ${price}.`, "Entrega, revisões, prazo e preço final precisam de confirmação. Registrar não contrata nem confirma pagamento."].join("\n\n");
+  if (scope.length > 1500) throw new Error("Reduza a descrição antes de registrar; nenhum conteúdo foi cortado ou enviado.");
+  return scope;
 }
 
 export function quoteText(q: ReturnType<typeof quoteDraft>) {
