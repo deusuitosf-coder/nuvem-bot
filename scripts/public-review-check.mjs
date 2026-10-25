@@ -5,7 +5,7 @@ import { chromium } from "playwright";
 const origin = "http://127.0.0.1:8081";
 const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
 try {
-  for (const width of [1280, 390]) {
+  for (const width of [1280, 390, 320]) {
     const context = await browser.newContext({ viewport: { width, height: 844 }, locale: "pt-BR" });
     const page = await context.newPage();
     const errors = [];
@@ -36,6 +36,17 @@ try {
       const response = await context.request.get(origin + path);
       assert.equal(response.status(), 200, `Broken internal link ${path}`);
     }
+    await page.goto(origin, { waitUntil: "networkidle" });
+    await context.setOffline(true);
+    await page.getByRole("status").filter({ hasText: "Você está sem conexão" }).waitFor();
+    await context.setOffline(false);
+    await page.getByRole("status").filter({ hasText: "Você está sem conexão" }).waitFor({ state: "hidden" });
+    const missing = await page.goto(origin + "/pagina-inexistente-de-teste", { waitUntil: "networkidle" });
+    assert.equal(missing.status(), 404);
+    await page.getByRole("heading", { name: "Vamos encontrar o caminho.", exact: true }).waitFor();
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
+    await page.getByRole("link", { name: "Voltar ao início", exact: true }).click();
+    await page.getByRole("heading", { name: /Antes de investir seu dinheiro/ }).waitFor();
     assert.deepEqual(errors, []);
     await context.close();
   }

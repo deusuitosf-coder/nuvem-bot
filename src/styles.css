@@ -19,6 +19,9 @@
 @layer base {
   html, body { background: var(--color-bg); color: var(--color-ink); }
   button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+  :where(a, button, input, textarea, select, summary):focus-visible { outline: 3px solid var(--color-sky); outline-offset: 4px; }
+  :where(input, textarea, select):disabled { opacity: 0.65; }
+  :where(section, details, button[id]) { scroll-margin-top: 1.5rem; }
 }
 
 @keyframes rise {

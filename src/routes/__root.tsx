@@ -3,6 +3,7 @@ import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import appCss from "../styles.css?url";
 import { InformationLinks } from "@/components/site-information";
+import { NetworkNotice } from "@/components/network-notice";
 
 const APP_NAME = "Nuven Bot";
 
@@ -27,6 +28,7 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  notFoundComponent: () => <main className="mx-auto max-w-3xl px-5 py-16 text-ink"><a href="/" className="font-display text-3xl text-navy">Nuven Bot</a><p className="mt-10 text-sm tracking-widest text-sky">PÁGINA NÃO ENCONTRADA</p><h1 className="mt-4 font-display text-4xl text-navy">Vamos encontrar o caminho.</h1><p className="mt-5 leading-relaxed text-muted">Este endereço pode ter mudado ou estar incompleto. Volte ao início para acessar seus projetos e os serviços disponíveis.</p><div className="mt-8 flex flex-wrap gap-4"><a href="/" className="inline-flex min-h-12 items-center rounded-xl bg-navy px-5 text-surface">Voltar ao início</a><a href="/contato" className="inline-flex min-h-12 items-center rounded-xl border border-line px-5 text-navy">Pedir ajuda</a></div></main>,
   component: () => (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
@@ -35,7 +37,9 @@ export const Route = createRootRoute({
       <body>
         <PreviewHostBridge />
         <AuthProvider>
-          <Outlet />
+          <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-xl focus:bg-navy focus:px-5 focus:py-3 focus:text-surface">Pular para o conteúdo</a>
+          <NetworkNotice />
+          <div id="conteudo" tabIndex={-1}><Outlet /></div>
           <InformationLinks />
         </AuthProvider>
         <Scripts />
