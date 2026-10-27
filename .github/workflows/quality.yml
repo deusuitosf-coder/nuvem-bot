@@ -1,12 +1,16 @@
 name: Nuven Bot checks
 on:
+  workflow_dispatch:
+  schedule:
+    # Daily at 03:20 in Brasilia (UTC-3); GitHub may delay scheduled runs.
+    - cron: '20 6 * * *'
   pull_request:
   push:
     branches: [main]
 permissions:
   contents: read
 concurrency:
-  group: nuven-checks-${{ github.ref }}
+  group: nuven-checks-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   verify:
